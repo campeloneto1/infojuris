@@ -1,0 +1,85 @@
+<p class="login-box-msg">Informe usuário e senha</p>
+<form [formGroup]="form" (submit)="entrar()">
+  <div class="form-group">
+    <div class="input-group">
+      <input
+        type="text"
+        formControlName="user"
+        maxlength="11"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': form.get('user')?.touched && form.get('user')?.errors?.['required'] }"
+        placeholder="Usuário"
+        
+      />
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <span class="fas fa-user"></span>
+        </div>
+      </div>
+    </div>
+   
+     <div
+      *ngIf="form.get('user')?.invalid && (form.get('user')?.dirty || form.get('user')?.touched)"
+    >
+      <div *ngIf="form.get('user')?.errors?.['minlength']">
+        Usuário deve ter no mínimo 11 caracteres
+      </div>
+      <span *ngIf="form.get('user')?.errors?.['required']" class="text-danger"
+      >Usuário é obrigatório</span
+    >
+    </div>
+
+   
+  </div>
+  <div class="form-group">
+    <div class="input-group ">
+      <input
+        type="password"
+        [ngClass]="{ 'is-invalid': form.get('password')?.touched && form.get('password')?.errors?.['required'] }"
+        formControlName="password"
+        class="form-control"
+        placeholder="Senha"
+      />
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <span class="fas fa-lock"></span>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
+    >
+      <div *ngIf="form.get('password')?.errors?.['minlength']">
+        Senha deve ter no mínimo 6 caracteres
+      </div>
+      <span *ngIf="form.get('password')?.errors?.['required']" class="text-danger"
+      >Senha é obrigatório</span
+    >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <div class="icheck-primary">
+        <input formControlName="lembrarme" type="checkbox" id="lembrarme" />
+        <label for="lembrarme"> Lembrar-Me </label>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <button
+        [disabled]="form.invalid"
+        type="submit"
+        class="btn btn-primary btn-block"
+      >
+        Entrar
+      </button>
+    </div>
+  </div>
+</form>
+
+<p class="mb-1">
+  <a href="forgot-password.html">Esqueci minha senha</a>
+</p>
+<p class="mb-0">
+  <a routerLink="cadastrese" class="text-center">Cadastre-se</a>
+</p>

@@ -1,0 +1,82 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Usuários</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a routerLink="/sis/Inicio">Início</a>
+            </li>
+            <li class="breadcrumb-item active">Usuários</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <button data-bs-toggle="modal" data-bs-target="#modal-xl" class="btn btn-outline-primary">
+            <i class="nav-icon fa fa-plus"></i>
+          </button>
+        </h3>
+      </div>
+      <div class="card-body p-2">
+        <table datatable class="table table-hover text-nowrap">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Opções</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Foo</td>
+              <td>Bar</td>
+              <td>Bar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modal-xl"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Extra Large Modal</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>One fine body…</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
