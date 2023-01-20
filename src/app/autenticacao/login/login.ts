@@ -1,4 +1,4 @@
 export interface Login{
-    user: string,
+    cpf: string,
     password: string
 }

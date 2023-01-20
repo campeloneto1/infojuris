@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EscritoriosComponent } from './pages/escritorios/escritorios.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { SistemaComponent } from './sistema.component';
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'Usuarios',
         component: UsuariosComponent,
+      },
+      {
+        path: 'Escritorios',
+        component: EscritoriosComponent,
       },
       { path: '', redirectTo: 'Inicio', pathMatch: 'full' },
       { path: '**', redirectTo: '/', pathMatch: 'full' },

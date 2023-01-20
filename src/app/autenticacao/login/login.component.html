@@ -1,14 +1,15 @@
 <p class="login-box-msg">Informe usuário e senha</p>
-<form [formGroup]="form" (submit)="entrar()">
+<form [formGroup]="form" (ngSubmit)="entrar()">
   <div class="form-group">
     <div class="input-group">
       <input
+        mask="000.000.000-00"
         type="text"
-        formControlName="user"
-        maxlength="11"
+        formControlName="cpf"
+        maxlength="14"
         class="form-control"
-        [ngClass]="{ 'is-invalid': form.get('user')?.touched && form.get('user')?.errors?.['required'] }"
-        placeholder="Usuário"
+        [ngClass]="{ 'is-invalid': form.get('cpf')?.touched && form.get('cpf')?.errors?.['required'] }"
+        placeholder="CPF"
         
       />
       <div class="input-group-append">
@@ -19,13 +20,13 @@
     </div>
    
      <div
-      *ngIf="form.get('user')?.invalid && (form.get('user')?.dirty || form.get('user')?.touched)"
+      *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)"
     >
-      <div *ngIf="form.get('user')?.errors?.['minlength']">
-        Usuário deve ter no mínimo 11 caracteres
+      <div *ngIf="form.get('cpf')?.errors?.['minlength']">
+        CPF deve ter no mínimo 11 caracteres
       </div>
-      <span *ngIf="form.get('user')?.errors?.['required']" class="text-danger"
-      >Usuário é obrigatório</span
+      <span *ngIf="form.get('cpf')?.errors?.['required']" class="text-danger"
+      >CPF é obrigatório</span
     >
     </div>
 
