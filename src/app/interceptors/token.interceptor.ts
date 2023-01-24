@@ -4,15 +4,18 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders
+  HttpHeaders,
+  HttpResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { SessionService } from '../shared/session.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionService,
+    private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     //console.log('aaaaaaaaaaaaa');
@@ -31,6 +34,14 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      tap(event => {
+        
+      }, error => {
+        if(error.status == 401){
+          this.router.navigate(['']);
+        }
+      })
+    );
   }
 }

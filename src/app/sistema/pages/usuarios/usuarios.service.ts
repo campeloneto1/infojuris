@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { Usuarios } from './usuarios';
+import { Usuario, Usuarios } from './usuarios';
 
 const API = environment.url;
 
@@ -14,5 +14,17 @@ export class UsuariosService {
 
   index(): Observable<Usuarios> {
     return this.http.get<Usuarios>(`${API}/users`);
+  }
+
+  store(data: Usuario){
+    return this.http.post(`${API}/users`,data);
+  }
+
+  update(data: Usuario){
+    return this.http.put(`${API}/users/${data.id}`,data);
+  }
+
+  destroy(id: number){
+    return this.http.delete(`${API}/users/${id}`);
   }
 }

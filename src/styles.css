@@ -2,3 +2,11 @@
 .point{
     cursor: pointer;
 }
+
+.options{
+    display: none;
+}
+
+.optionshover:hover td a{
+    display: inline;
+}

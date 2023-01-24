@@ -5,13 +5,16 @@ import { RouterModule } from '@angular/router';
 import { NavbarModule } from './components/navbar/navbar.module';
 import { SidebarModule } from './components/sidebar/sidebar.module';
 import { SistemaRoutingModule } from './sistema-routing.module';
-
+import { SistemaComponent } from './sistema.component';
 
 import { InicioComponent } from './pages/inicio/inicio.component';
 
-import { SistemaComponent } from './sistema.component';
-import { UsuariosModule } from './pages/usuarios/usuarios.module';
 import { EscritoriosModule } from './pages/escritorios/escritorios.module';
+import { NaturezasModule } from './pages/naturezas/naturezas.module';
+import { OcupacoesModule } from './pages/ocupacoes/ocupacoes.module';
+import { UsuariosModule } from './pages/usuarios/usuarios.module';
+import { TribunaisModule } from './pages/tribunais/tribunais.module';
+
 
 @NgModule({
   declarations: [SistemaComponent, InicioComponent],
@@ -22,8 +25,11 @@ import { EscritoriosModule } from './pages/escritorios/escritorios.module';
     NavbarModule,
     SidebarModule,
     HttpClientModule,
+    EscritoriosModule,
+    NaturezasModule,
+    OcupacoesModule,
     UsuariosModule,
-    EscritoriosModule
+    TribunaisModule
   ],
   exports: []
 })

@@ -5,11 +5,9 @@ import { FomularioUsuariosComponent } from './formulario/formulario-usuarios.com
 import { UsuariosComponent } from './usuarios.component';
 
 @NgModule({
-  declarations: [
-    UsuariosComponent, 
-    FomularioUsuariosComponent
-  ],
+  declarations: [UsuariosComponent, FomularioUsuariosComponent],
   imports: [CommonModule, SharedModule],
-  exports: [UsuariosComponent, FomularioUsuariosComponent],
+  exports: [],
+  
 })
 export class UsuariosModule {}

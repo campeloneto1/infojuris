@@ -1,3 +1,5 @@
+import { Cidade } from "../cidades/cidades";
+
 export interface Escritorio{
     id?: number,
     nome: string,
@@ -10,6 +12,7 @@ export interface Escritorio{
     bairro?: string,
     complemento?: string,
     cidade_id?: number,
+    cidade: Cidade,
     cep?: string,
     created_by?: number,
     created_at?: Date,

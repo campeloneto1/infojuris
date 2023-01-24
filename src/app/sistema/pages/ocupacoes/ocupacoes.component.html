@@ -1,0 +1,154 @@
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Ocupações</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item">
+                <a routerLink="/sis/Inicio">Início</a>
+              </li>
+              <li class="breadcrumb-item active">Ocupações</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="content">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#modalcad"
+              class="btn btn-outline-primary"
+              (click)="resetarForm()"
+            >
+              <i class="nav-icon fa fa-plus"></i>
+            </button>
+          </h3>
+        </div>
+        <div class="card-body p-2">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="table table-hover table-head-fixed text-nowrap"
+          >
+            <thead>
+              <tr>
+                <th>#</th>               
+                <th>Nome</th>               
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <!-- -->
+            <tbody *ngIf="data$ | async as data; else loading">
+              <tr *ngFor="let row of data" class="optionshover">
+                <td>{{ row.id }}</td>               
+                <td>{{ row.nome }}</td>              
+                <td>
+                  <a
+                    class="options"
+                    (click)="edit(row)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalcad"
+                  >
+                    <i
+                      class="fas fa-edit text-primary point"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <a
+                    class="options"
+                    (click)="delete(row)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modaldel"
+                  >
+                    <i
+                      class="fas fa-trash text-danger point ml-2"
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-template #loading>
+            <tbody class="text-center">
+              <tr>
+                <td colspan="100%">
+                  <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                </td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </div>
+      </div>
+  
+      <div class="modal fade" id="modalcad" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Cadastrar</h4>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <app-formulario-ocupacoes
+                (refresh)="refresh()"
+              ></app-formulario-ocupacoes>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+  
+      <div class="modal fade" id="modaldel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" *ngIf="excluir">
+            <div class="modal-header">
+              <h4 class="modal-title">Excluir</h4>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Tem certeza que deseja excluir <b>{{ excluir.nome }}</b
+                >?
+              </p>
+            </div>
+            <div class="modal-footer justify-right">
+              <button type="button" class="btn btn-link" data-bs-dismiss="modal">
+                Fechar
+              </button>
+              <button
+                (click)="confirm(excluir.id)"
+                data-bs-dismiss="modal"
+                type="button"
+                class="btn btn-danger"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
