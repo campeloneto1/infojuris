@@ -83,41 +83,37 @@
           class="user-image img-circle elevation-2"
           alt="User Image"
         />
-        <span class="d-none d-md-inline">Alexander Pierce</span>
+        <span class="d-none d-md-inline">{{ user.nome }}</span>
       </a>
       <ul
         class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
         style="left: inherit; right: 0px"
       >
-        <li class="user-header bg-primary">
+        <li class="user-header bg-navy">
           <img
             src="assets/casamil.png"
             class="img-circle elevation-2"
             alt="User Image"
           />
           <p>
-            Alexander Pierce - Web Developer
-            <small>Member since Nov. 2012</small>
+            {{ user.nome }}
+            <small>{{ user.cpf | mask: '000.000.000-00' }}</small>
           </p>
         </li>
 
         <li class="user-body">
           <div class="row">
-            <div class="col-4 text-center">
-              <a href="#">Followers</a>
+            
+            <div class="col-12 text-center">
+              <a href="#">Alterar senha</a>
             </div>
-            <div class="col-4 text-center">
-              <a href="#">Sales</a>
-            </div>
-            <div class="col-4 text-center">
-              <a href="#">Friends</a>
-            </div>
+            
           </div>
         </li>
 
         <li class="user-footer">
-          <a href="#" class="btn btn-default btn-flat">Profile</a>
-          <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+          <a href="#" class="btn btn-default btn-flat">Perfil</a>
+          <a (click)="logout()" class="btn btn-default btn-flat float-right">Sair</a>
         </li>
       </ul>
     </li>

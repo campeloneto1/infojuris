@@ -14,6 +14,7 @@ import { NaturezasModule } from './pages/naturezas/naturezas.module';
 import { OcupacoesModule } from './pages/ocupacoes/ocupacoes.module';
 import { UsuariosModule } from './pages/usuarios/usuarios.module';
 import { TribunaisModule } from './pages/tribunais/tribunais.module';
+import { PaisesModule } from './pages/paises/paises.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TribunaisModule } from './pages/tribunais/tribunais.module';
     HttpClientModule,
     EscritoriosModule,
     NaturezasModule,
+    PaisesModule,
     OcupacoesModule,
     UsuariosModule,
     TribunaisModule

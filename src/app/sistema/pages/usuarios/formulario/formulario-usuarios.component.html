@@ -1,90 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
   <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
-        <label for="nome"
-          >Nome<span
-            *ngIf="this.form.get('nome')?.errors?.['required']"
-            class="text-danger"
-            >*</span
-          ></label
-        >
-        <input
-          formControlName="nome"
-          [ngClass]="{
-            'is-invalid':
-              form.get('nome')?.invalid &&
-              (form.get('nome')?.dirty || form.get('nome')?.touched)
-          }"
-          type="text"
-          class="form-control"
-          id="nome"
-          placeholder="Nome"
-        
-        />
-        <div
-          *ngIf="
-            form.get('nome')?.invalid &&
-            (form.get('nome')?.dirty || form.get('nome')?.touched)
-          "
-        >
-          <span *ngIf="form.get('nome')?.errors?.['minlength']">
-            Nome deve ter no mínimo 5 caracteres
-          </span>
-          <span *ngIf="form.get('nome')?.errors?.['maxlength']">
-            Nome deve ter no máximo 150 caracteres
-          </span>
-          <span
-            *ngIf="form.get('nome')?.errors?.['required']"
-            class="text-danger"
-            >Nome é obrigatório</span
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="form-group">
-        <label for="cpf"
-          >CPF<span
-            *ngIf="this.form.get('cpf')?.errors?.['required']"
-            class="text-danger"
-            >*</span
-          ></label
-        >
-        <input
-          formControlName="cpf"
-          [ngClass]="{
-            'is-invalid':
-              form.get('cpf')?.invalid &&
-              (form.get('cpf')?.dirty || form.get('cpf')?.touched)
-          }"
-          maxlength="14"
-          mask="000.000.000-00"
-          type="text"
-          class="form-control"
-          id="cpf"
-          placeholder="CPF"
-        />
-        <div
-          *ngIf="
-            form.get('cpf')?.invalid &&
-            (form.get('cpf')?.dirty || form.get('cpf')?.touched)
-          "
-        >
-          <span *ngIf="form.get('cpf')?.errors?.['minlength']">
-            CPF deve ter no mínimo 11 caracteres
-          </span>
-          <span *ngIf="form.get('cpf')?.errors?.['maxlength']">
-            CPF deve ter no máximo 11 caracteres
-          </span>
-          <span
-            *ngIf="form.get('cpf')?.errors?.['required']"
-            class="text-danger"
-            >CPF é obrigatório</span
-          >
-        </div>
-      </div>
-    </div>
+    <app-input-text
+      class="col-sm-4"
+      [label]="'Nome'"
+      [id]="'nome'"
+      [tipo]="'text'"
+      formControlName="nome"
+    ></app-input-text>
+    <app-input-text
+      class="col-sm-2"
+      [label]="'CPF'"
+      [id]="'cpf'"
+      [tipo]="'text'"
+      [mascara]="'000.000.000-00'"
+      formControlName="cpf"
+    ></app-input-text>
+    
     <div class="col-sm-4">
       <div class="form-group" *ngIf="escritorios$ | async as escritorios">
         <label for="escritorio"
@@ -117,170 +48,42 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
-        <label for="email"
-          >E-mail<span
-            *ngIf="this.form.get('email')?.errors?.['required']"
-            class="text-danger"
-            >*</span
-          ></label
-        >
-        <input
-          formControlName="email"
-          [ngClass]="{
-            'is-invalid':
-              form.get('email')?.invalid &&
-              (form.get('email')?.dirty || form.get('email')?.touched)
-          }"
-          type="email"
-          class="form-control"
-          id="email"
-          placeholder="E-mail"
-        />
-        <div
-          *ngIf="
-            form.get('email')?.invalid &&
-            (form.get('email')?.dirty || form.get('email')?.touched)
-          "
-        >
-          <span *ngIf="form.get('email')?.errors?.['email']">
-            O texto informado precisa ser um e-mail.
-          </span>
-          
-          <span
-            *ngIf="form.get('email')?.errors?.['required']"
-            class="text-danger"
-            >E-mail é obrigatório</span
-          >
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="form-group">
-        <label for="telefone1"
-          >Telefone 1<span
-            *ngIf="this.form.get('telefone1')?.errors?.['required']"
-            class="text-danger"
-            >*</span
-          ></label
-        >
-        <input
-          formControlName="telefone1"
-          [ngClass]="{
-            'is-invalid':
-              form.get('telefone1')?.invalid &&
-              (form.get('telefone1')?.dirty || form.get('telefone1')?.touched)
-          }"
-          maxlength="16"
-          mask="(00) 0 0000-0000"
-          type="text"
-          class="form-control"
-          id="telefone1"
-          placeholder="Telefone 1"
-        />
-        <div
-        *ngIf="
-          form.get('telefone1')?.invalid &&
-          (form.get('telefone1')?.dirty || form.get('telefone1')?.touched)
-        "
-      >
-        <span *ngIf="form.get('telefone1')?.errors?.['minlength']">
-          Telefone deve ter no mínimo 11 caracteres
-        </span>
-        <span *ngIf="form.get('telefone1')?.errors?.['maxlength']">
-          Telefone deve ter no máximo 11 caracteres
-        </span>
-        <span
-          *ngIf="form.get('telefone1')?.errors?.['required']"
-          class="text-danger"
-          >Telefone é obrigatório</span
-        >
-      </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="form-group">
-        <label for="telefone2"
-          >Telefone 2<span
-            *ngIf="this.form.get('telefone2')?.errors?.['required']"
-            class="text-danger"
-            >*</span
-          ></label
-        >
-        <input
-          formControlName="telefone2"
-          [ngClass]="{
-            'is-invalid':
-              form.get('telefone2')?.invalid &&
-              (form.get('telefone2')?.dirty || form.get('telefone2')?.touched)
-          }"
-          maxlength="16"
-          mask="(00) 0 0000-0000"
-          type="text"
-          class="form-control"
-          id="telefone2"
-          placeholder="Telefone 2"
-        />
-        <div
-        *ngIf="
-          form.get('telefone2')?.invalid &&
-          (form.get('telefone2')?.dirty || form.get('telefone2')?.touched)
-        "
-      >
-        <span *ngIf="form.get('telefone2')?.errors?.['minlength']">
-          Telefone deve ter no mínimo 11 caracteres
-        </span>
-        <span *ngIf="form.get('telefone2')?.errors?.['maxlength']">
-          Telefone deve ter no máximo 11 caracteres
-        </span>
-        <span
-          *ngIf="form.get('telefone2')?.errors?.['required']"
-          class="text-danger"
-          >Telefone é obrigatório</span
-        >
-      </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="form-group" *ngIf="perfis$ | async as perfis">
-        <label for="perfil_id"
-          >Perfil<span
-            *ngIf="this.form.get('perfil_id')?.errors?.['required']"
-            class="text-danger"
-            >*</span
-          ></label
-        >
-        <select
-          formControlName="perfil_id"
-          [ngClass]="{
-            'is-invalid':
-              form.get('perfil_id')?.invalid &&
-              (form.get('perfil_id')?.dirty || form.get('perfil_id')?.touched)
-          }"
-          class="form-control"
-          id="perfil_id"
-        >
-          <option></option>
-          <option *ngFor="let perfil of perfis" [value]="perfil.id">
-            {{ perfil.nome }}
-          </option>
-        </select>
-        <div
-          *ngIf="
-            form.get('perfil_id')?.invalid &&
-            (form.get('perfil_id')?.dirty || form.get('perfil_id')?.touched)
-          "
-        >
-         
-          <span
-            *ngIf="form.get('perfil_id')?.errors?.['required']"
-            class="text-danger"
-            >Perfil é obrigatório</span
-          >
-        </div>
-      </div>
-    </div>
+    <app-input-text
+      class="col-sm-4"
+      [label]="'E-mail'"
+      [id]="'email'"
+      [tipo]="'email'"
+      formControlName="email"
+    ></app-input-text>
+
+    <app-input-text
+      class="col-sm-2"
+      [label]="'Telefone 1'"
+      [id]="'telefone1'"
+      [tipo]="'text'"
+      [mascara]="'(00) 0 0000-0000'"
+      formControlName="telefone1"
+    ></app-input-text>
+
+    <app-input-text
+      class="col-sm-2"
+      [label]="'Telefone 2'"
+      [id]="'telefone2'"
+      [tipo]="'text'"
+      [mascara]="'(00) 0 0000-0000'"
+      formControlName="telefone2"
+    ></app-input-text>
+
+    <app-input-select
+      class="col-sm-2"
+      [label]="'Perfil'"
+      [id]="'perfil_id'"
+      [data$]="perfis$"
+      formControlName="perfil_id"
+    ></app-input-select>
+
+    
+    
   </div>
 
   <hr />

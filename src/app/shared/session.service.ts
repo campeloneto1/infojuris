@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Usuario } from '../sistema/pages/usuarios/usuarios';
 import { Session } from './session';
 
 @Injectable({
@@ -6,9 +8,9 @@ import { Session } from './session';
 })
 export class SessionService {
     private token!: string;
-    private user!: Object;
+    private user!: Usuario;
 
-    constructor(){
+    constructor(private router: Router){
         try {
             //console.log(sessionStorage.getItem('usuario'));
             var temp = localStorage.getItem('token')?.length;
@@ -24,7 +26,8 @@ export class SessionService {
             }
           }
           catch (e) {
-            //localStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth'])
           }
     }
 
@@ -56,9 +59,27 @@ export class SessionService {
         }
     }
 
+    setToken(data: string){
+      this.token = data;
+    }
+
+    setUser(data: Usuario){
+        this.user = data;
+    }
+
     retornaToken(){
         return this.token;
     }
 
+    retornaUser(){
+      return this.user;
+    }
+
+    logout(){
+      this.token = '';
+      this.user = {} as Usuario;
+      localStorage.clear();
+      this.router.navigate(['/auth'])
+    }
 
 }

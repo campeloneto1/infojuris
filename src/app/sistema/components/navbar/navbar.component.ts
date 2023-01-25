@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { SessionService } from "src/app/shared/session.service";
+import { Usuario } from "../../pages/usuarios/usuarios";
 
 @Component({
     selector: 'app-navbar',
@@ -6,5 +8,18 @@ import { Component } from "@angular/core";
     styleUrls: ['./navbar.component.css']
 })
 
-export class NavbarCompnent{
+export class NavbarCompnent implements OnInit{
+    user!: Usuario;
+
+    constructor(private sessionService: SessionService){
+        
+    }
+    
+    ngOnInit(): void {
+       this.user = this.sessionService.retornaUser();
+    }
+
+    logout(){
+        this.sessionService.logout();
+    }
 }

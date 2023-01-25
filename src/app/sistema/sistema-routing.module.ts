@@ -4,6 +4,7 @@ import { EscritoriosComponent } from './pages/escritorios/escritorios.component'
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NaturezasComponent } from './pages/naturezas/naturezas.component';
 import { OcupacoesComponent } from './pages/ocupacoes/ocupacoes.component';
+import { PaisesComponent } from './pages/paises/paises.component';
 import { TribunaisComponent } from './pages/tribunais/tribunais.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { SistemaComponent } from './sistema.component';
@@ -33,6 +34,11 @@ const routes: Routes = [
         component: OcupacoesComponent,
       },
       {
+        path: 'Paises',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        component: PaisesComponent,
+      },
+      {
         path: 'Tribunais',
         //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
         component: TribunaisComponent,
@@ -44,7 +50,7 @@ const routes: Routes = [
       },
       
       { path: '', redirectTo: 'Inicio', pathMatch: 'full' },
-      { path: '**', redirectTo: '/', pathMatch: 'full' },
+      { path: '**', redirectTo: 'Inicio', pathMatch: 'full' },
     ],
   },
 ];

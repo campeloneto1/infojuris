@@ -5,15 +5,15 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   
   {
-    path: '',
+    path: 'auth',
     loadChildren: () => import('./autenticacao/autenticacao.module').then((m) => m.AutenticacaoModule),
   },
   {
-    path: 'sis',
+    path: '',
     loadChildren: () => import('./sistema/sistema.module').then((m) => m.SistemaModule),
     canMatch: [AuthGuard],
   },
-  {path: '**', redirectTo: '', pathMatch: 'full'},
+  {path: '**', redirectTo: 'auth', pathMatch: 'full'},
 ];
 
 @NgModule({

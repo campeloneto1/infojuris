@@ -1,0 +1,26 @@
+<div class="form-group" *ngIf="data$ | async as data">
+  <label for="{{ id }}">
+    {{ label }}
+    <span *ngIf="control?.errors?.['required']" class="text-danger">*</span>
+  </label>
+  <select
+    [(ngModel)]="inputvalor"
+    (change)="change()"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"
+    class="form-control"
+    id="{{ id }}"
+  >
+    <option></option>
+    <option *ngFor="let row of data" [value]="row.id">
+      {{ row.nome }}
+    </option>
+  </select>
+
+  <div *ngIf="control.invalid && (control.dirty || control.touched)">
+    <span *ngIf="control?.errors?.['required']" class="text-danger"
+      >{{ label }} é obrigatório</span
+    >
+  </div>
+</div>

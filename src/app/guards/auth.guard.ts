@@ -28,7 +28,7 @@ export class AuthGuard implements CanMatch {
       | boolean
       | UrlTree {
       if (!this.sessionService.check()) {
-        this.router.navigate(['']);
+        this.router.navigate(['auth']);
         return false;
       }
   

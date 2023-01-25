@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           //console.log(res);
           this.sessionService.setSession(res);
-          this.router.navigate(['/sis']);
+          this.router.navigate(['/Inicio']);
         },
         error: (error) => {
           this.sharedService.toast(

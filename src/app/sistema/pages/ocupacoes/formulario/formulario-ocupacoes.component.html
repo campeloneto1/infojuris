@@ -1,65 +1,34 @@
 <form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label for="nome"
-            >Nome<span
-              *ngIf="this.form.get('nome')?.errors?.['required']"
-              class="text-danger"
-              >*</span
-            ></label
-          >
-          <input
-            formControlName="nome"
-            [ngClass]="{
-              'is-invalid':
-                form.get('nome')?.invalid &&
-                (form.get('nome')?.dirty || form.get('nome')?.touched)
-            }"
-            type="text"
-            class="form-control"
-            id="nome"
-            placeholder="Nome"
-          
-          />
-          <div
-            *ngIf="
-              form.get('nome')?.invalid &&
-              (form.get('nome')?.dirty || form.get('nome')?.touched)
-            "
-          >
-            <span *ngIf="form.get('nome')?.errors?.['minlength']">
-              Nome deve ter no mínimo 5 caracteres
-            </span>
-            <span *ngIf="form.get('nome')?.errors?.['maxlength']">
-              Nome deve ter no máximo 150 caracteres
-            </span>
-            <span
-              *ngIf="form.get('nome')?.errors?.['required']"
-              class="text-danger"
-              >Nome é obrigatório</span
-            >
-          </div>
-        </div>
-      </div>
-      
-      
+  <div class="row">
+    <app-input-text
+      class="col-sm-4"
+      [label]="'Nome'"
+      [id]="'nome'"
+      [tipo]="'text'"
+      formControlName="nome"
+    ></app-input-text>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <button
+        type="button"
+        class="btn btn-link text-danger"
+        data-bs-dismiss="modal"
+      >
+        Fechar
+      </button>
+      <!--[disabled]="form.invalid"-->
+      <button
+        [disabled]="form.invalid"
+        data-bs-dismiss="modal"
+        type="submit"
+        class="btn btn-primary"
+      >
+        Salvar
+      </button>
     </div>
-  
-    <hr />
-  
-    <div class="row">
-      <div class="col-sm-12 text-right">
-        <button
-          type="button"
-          class="btn btn-link text-danger"
-          data-bs-dismiss="modal"
-        >
-          Fechar
-        </button>
-        <!--[disabled]="form.invalid"-->
-        <button [disabled]="form.invalid"  data-bs-dismiss="modal" type="submit" class="btn btn-primary">Salvar</button>
-      </div>
-    </div>
-  </form>
-  
+  </div>
+</form>
