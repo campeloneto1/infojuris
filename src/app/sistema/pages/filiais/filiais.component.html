@@ -3,14 +3,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Tribunais</h1>
+            <h1>Filiais</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item">
                 <a routerLink="/sis/Inicio">Início</a>
               </li>
-              <li class="breadcrumb-item active">Tribunais</li>
+              <li class="breadcrumb-item active">Filiais</li>
             </ol>
           </div>
         </div>
@@ -41,16 +41,18 @@
             <thead>
               <tr>
                 <th>#</th>               
-                <th>Nome</th>    
+                <th>Escritório</th> 
+                <th>Nome</th> 
                 <th>E-mail</th>    
-                <th>Telefone 1</th>               
+                <th>Telefone 1</th>         
                 <th>Opções</th>
               </tr>
             </thead>
             <!-- -->
             <tbody *ngIf="data$ | async as data; else loading">
               <tr *ngFor="let row of data" class="optionshover">
-                <td>{{ row.id }}</td>               
+                <td>{{ row.id }}</td>   
+                <td>{{ row.escritorio.nome }}</td>             
                 <td>{{ row.nome }}</td> 
                 <td>{{ row.email }}</td>              
                 <td>{{ row.telefone1 | mask: '(00) 0 0000-0000' }}</td> 
@@ -108,9 +110,9 @@
               </button>
             </div>
             <div class="modal-body">
-              <app-formulario-tribunais
+              <app-formulario-filiais
                 (refresh)="refresh()"
-              ></app-formulario-tribunais>
+              ></app-formulario-filiais>
             </div>
             
           </div>

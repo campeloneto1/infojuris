@@ -2,30 +2,33 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { SharedService } from "src/app/shared/shared.service";
-import { Cidade, Cidades } from "../../cidades/cidades";
-import { Estado, Estados } from "../../estados/estados";
-import { Pais, Paises } from "../../paises/paises";
-import { PaisesService } from "../../paises/paises.service";
-import { Tribunal } from "../tribunais";
-import { TribunaisService } from "../tribunais.service";
+import { Cidades } from "../../cidades/cidades";
+import { Escritorios } from "../../escritorios/escritorios";
+import { EscritoriosService } from "../../escritorios/escritorios.service";
+import { Estados } from "../../estados/estados";
+import { Paises } from "../../paises/paises";
+import { Filial } from "../filiais";
+import { FiliaisService } from "../filiais.service";
 
 @Component({
-    selector: 'app-formulario-tribunais',
-    templateUrl: './formulario-tribunais.component.html',
-    styleUrls: ['./formulario-tribunais.component.css']
-
+    selector: 'app-formulario-filiais',
+    templateUrl: './formulario-filiais.component.html',
+    styleUrls: ['./formulario-filiais.component.css']
 })
 
-export class FormularioTribunaisComponent{
-  @Output('refresh') refresh: EventEmitter<Tribunal> = new EventEmitter();
+export class FormularioFiliaisComponent{
+    @Output('refresh') refresh: EventEmitter<Filial> = new EventEmitter();
   protected form!: FormGroup;
 
+  protected escritorios$!: Observable<Escritorios>;
   protected paises$!: Observable<Paises>;
   protected estados$!: Observable<Estados>;
   protected cidades$!: Observable<Cidades>;
 
+
   constructor(
-    private tribunaisService: TribunaisService,
+    private filiaisService: FiliaisService,
+    private escritoriosService: EscritoriosService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder
   ) {}
@@ -33,11 +36,12 @@ export class FormularioTribunaisComponent{
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
+      escritorio_id: ['', [Validators.required]],
       nome: [
         '',
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(4),
           Validators.maxLength(150),
         ]),
       ],
@@ -56,6 +60,7 @@ export class FormularioTribunaisComponent{
       cep: [''],
     });
 
+    this.escritorios$ = this.escritoriosService.index();
     this.paises$ = this.sharedService.getPaises();
   }
 
@@ -72,7 +77,7 @@ export class FormularioTribunaisComponent{
     }
   }
 
-  setForm(data: Tribunal) {
+  setForm(data: Filial) {
     this.form.patchValue(data);
     if(data.cidade.estado_id){
       this.form.get('estado_id')?.patchValue(data.cidade.estado_id);
@@ -81,8 +86,7 @@ export class FormularioTribunaisComponent{
     if(data.cidade.estado.pais_id){
       this.form.get('pais_id')?.patchValue(data.cidade.estado.pais_id);
       this.cidades$ = this.sharedService.getCidades(data.cidade.estado_id);
-    }        
-  
+    }   
   }
 
   resetar() {
@@ -90,9 +94,9 @@ export class FormularioTribunaisComponent{
   }
 
   cadastrar() {
-    //console.log(this.form.value as Usuario);
+    //console.log(this.form.value);
     if (this.form.value.id) {
-      this.tribunaisService.update(this.form.value as Tribunal).subscribe({
+      this.filiaisService.update(this.form.value as Filial).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 3);
           this.form.reset();
@@ -103,7 +107,7 @@ export class FormularioTribunaisComponent{
         },
       });
     } else {
-      this.tribunaisService.store(this.form.value as Tribunal).subscribe({
+      this.filiaisService.store(this.form.value as Filial).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 1);
           this.form.reset();
@@ -114,5 +118,9 @@ export class FormularioTribunaisComponent{
         },
       });
     }
+  }
+
+  editar(data: Filial) {
+    this.form.patchValue(data);
   }
 }

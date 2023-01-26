@@ -2,30 +2,33 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { SharedService } from "src/app/shared/shared.service";
-import { Cidade, Cidades } from "../../cidades/cidades";
-import { Estado, Estados } from "../../estados/estados";
-import { Pais, Paises } from "../../paises/paises";
-import { PaisesService } from "../../paises/paises.service";
-import { Tribunal } from "../tribunais";
-import { TribunaisService } from "../tribunais.service";
+import { Cidades } from "../../cidades/cidades";
+import { Comarcas } from "../../comarcas/comarcas";
+import { Estados } from "../../estados/estados";
+import { Paises } from "../../paises/paises";
+import { Tribunais } from "../../tribunais/tribunais";
+import { Vara } from "../varas";
+import { VarasService } from "../varas.service";
 
 @Component({
-    selector: 'app-formulario-tribunais',
-    templateUrl: './formulario-tribunais.component.html',
-    styleUrls: ['./formulario-tribunais.component.css']
-
+    selector: 'app-formulario-varas',
+    templateUrl: './formulario-varas.component.html',
+    styleUrls: ['./formulario-varas.component.css']
 })
 
-export class FormularioTribunaisComponent{
-  @Output('refresh') refresh: EventEmitter<Tribunal> = new EventEmitter();
+export class FormularioVarasComponent{
+    @Output('refresh') refresh: EventEmitter<Vara> = new EventEmitter();
   protected form!: FormGroup;
 
+  protected tribunais$!: Observable<Tribunais>;
+  protected comarcas$!: Observable<Comarcas>;
   protected paises$!: Observable<Paises>;
   protected estados$!: Observable<Estados>;
   protected cidades$!: Observable<Cidades>;
 
+
   constructor(
-    private tribunaisService: TribunaisService,
+    private varasService: VarasService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder
   ) {}
@@ -33,11 +36,13 @@ export class FormularioTribunaisComponent{
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
+      tribunal_id: ['', [Validators.required]],
+      comarca_id: ['', [Validators.required]],
       nome: [
         '',
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(4),
           Validators.maxLength(150),
         ]),
       ],
@@ -56,6 +61,7 @@ export class FormularioTribunaisComponent{
       cep: [''],
     });
 
+    this.tribunais$ = this.sharedService.getTribunais();
     this.paises$ = this.sharedService.getPaises();
   }
 
@@ -72,8 +78,18 @@ export class FormularioTribunaisComponent{
     }
   }
 
-  setForm(data: Tribunal) {
+  getComarcas(){
+    if(this.form.value.tribunal_id){
+      this.comarcas$ = this.sharedService.getComarcas(this.form.value.tribunal_id);
+    }
+  }
+
+  setForm(data: Vara) {
     this.form.patchValue(data);
+    if(data.comarca.tribunal_id){
+      this.form.get('tribunal_id')?.patchValue(data.comarca.tribunal_id);
+      this.comarcas$ = this.sharedService.getComarcas(data.comarca.tribunal_id);
+    }
     if(data.cidade.estado_id){
       this.form.get('estado_id')?.patchValue(data.cidade.estado_id);
       this.estados$ = this.sharedService.getEstados(data.cidade.estado.pais_id);
@@ -81,8 +97,8 @@ export class FormularioTribunaisComponent{
     if(data.cidade.estado.pais_id){
       this.form.get('pais_id')?.patchValue(data.cidade.estado.pais_id);
       this.cidades$ = this.sharedService.getCidades(data.cidade.estado_id);
-    }        
-  
+    }   
+    
   }
 
   resetar() {
@@ -90,9 +106,9 @@ export class FormularioTribunaisComponent{
   }
 
   cadastrar() {
-    //console.log(this.form.value as Usuario);
+    //console.log(this.form.value);
     if (this.form.value.id) {
-      this.tribunaisService.update(this.form.value as Tribunal).subscribe({
+      this.varasService.update(this.form.value as Vara).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 3);
           this.form.reset();
@@ -103,7 +119,7 @@ export class FormularioTribunaisComponent{
         },
       });
     } else {
-      this.tribunaisService.store(this.form.value as Tribunal).subscribe({
+      this.varasService.store(this.form.value as Vara).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 1);
           this.form.reset();

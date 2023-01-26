@@ -3,7 +3,7 @@ import { EscritoriosService } from '../../escritorios/escritorios.service';
 import { Escritorio, Escritorios } from '../../escritorios/escritorios';
 import { Observable } from 'rxjs';
 import { PerfisService } from '../../perfis/perfis.service';
-import { Perfis } from '../../perfis/perfis';
+import { Perfil, Perfis } from '../../perfis/perfis';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../usuarios';
 import { UsuariosService } from '../usuarios.service';
@@ -21,25 +21,7 @@ export class FomularioUsuariosComponent implements OnInit {
   @Output('refresh') refresh: EventEmitter<Usuario> = new EventEmitter();
   protected form!: FormGroup;
 
-  config = {
-    displayFn: (item: Escritorio) => {
-      return `${item.nome} (${item.cnpj})`;
-    }, //to support flexible text displaying for each item
-    displayKey: 'description', //if objects array passed which key to be displayed defaults to description
-    search: true, //true/false for the search functionlity defaults to false,
-    height: 'auto', //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
-    placeholder: 'Escritório', // text to be displayed when no item is selected defaults to Select,
-    //customComparator: ()=>{}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
-    limitTo: 0, // number thats limits the no of options displayed in the UI (if zero, options will not be limited)
-    moreText: 'mais', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
-    noResultsFound: 'Não encontrado!', // text to be displayed when no items are found while searching
-    searchPlaceholder: 'Pesquisar', // label thats displayed in search input,
-    searchOnKey: 'nome', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
-    clearOnSelection: false, // clears search criteria when an option is selected if set to true, default is false
-    inputDirection: 'ltr', // the direction of the search input can be rtl or ltr(default)
-    selectAllLabel: 'Select all', // label that is displayed in multiple selection for select all
-    enableSelectAll: false, // enable select all option to select all available items, default is false
-  };
+  
 
   constructor(
     private escritoriosService: EscritoriosService,
@@ -52,6 +34,8 @@ export class FomularioUsuariosComponent implements OnInit {
   ngOnInit(): void {
     this.escritorios$ = this.escritoriosService.index();
     this.perfis$ = this.perfisService.index();
+
+    
 
     this.form = this.formBuilder.group({
       id: [''],
@@ -77,9 +61,8 @@ export class FomularioUsuariosComponent implements OnInit {
         Validators.compose([Validators.required, Validators.minLength(11)]),
       ],
       telefone2: ['', [Validators.minLength(11)]],
-      escritorio: ['', [Validators.required]],
-      escritorio_id: [''],
-      perfil_id: ['', [Validators.required]],
+      escritorio_id: ['' , [Validators.required]],
+      perfil_id: ['' , [Validators.required]],
     });
   }
 

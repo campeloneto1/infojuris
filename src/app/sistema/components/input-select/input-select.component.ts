@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from "@angular/core";
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import { AbstractControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
 import { Observable } from "rxjs";
 
 @Component({
@@ -26,15 +26,18 @@ export class InputSelectComponent{
 
   @Input() id!: string;
   @Input() label!: string;
-  @Input() data$!: Observable<any>;
+  @Input() data$!: Observable<any> ;
+  @Input() disabled: boolean = false;
+
+  @Input() optionid: string = 'id';
+  @Input() optionname: string = 'nome';
+  @Input() allowclear: boolean = true;
 
   onChange = (inputvalor:number) => {};
 
   onTouched = () => {};
 
   touched = false;
-
-  disabled = true;
 
   change() {
     this.markAsTouched();
@@ -44,6 +47,7 @@ export class InputSelectComponent{
   }
 
   writeValue(inputvalor: number) {
+    
     this.inputvalor = inputvalor;
   }
 

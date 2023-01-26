@@ -17,3 +17,5 @@ export interface Comarca{
     cidade: Cidade,
     cep?: string,
 }
+
+export type Comarcas = Array<Comarca>;

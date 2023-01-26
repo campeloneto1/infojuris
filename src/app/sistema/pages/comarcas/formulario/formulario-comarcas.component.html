@@ -1,5 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
   <div class="row">
+    <app-input-select
+      class="col-sm-2"
+      [label]="'Tribunal'"
+      [id]="'tribunal_id'"
+      [data$]="tribunais$"
+      formControlName="tribunal_id"
+    ></app-input-select>
+
     <app-input-text
       class="col-sm-4"
       [label]="'Nome'"
@@ -8,14 +16,17 @@
       formControlName="nome"
     ></app-input-text>
 
+   
+  </div>
+  <div class="row">
     <app-input-text
-      class="col-sm-4"
-      [label]="'E-mail'"
-      [id]="'email'"
-      [tipo]="'email'"
-      formControlName="email"
-    ></app-input-text>
-
+    class="col-sm-4"
+    [label]="'E-mail'"
+    [id]="'email'"
+    [tipo]="'email'"
+    formControlName="email"
+  ></app-input-text>
+  
     <app-input-text
       class="col-sm-2"
       [label]="'Telefone 1'"
@@ -36,6 +47,7 @@
       
     ></app-input-text>
   </div>
+
   <div class="row">
 
     <app-input-select

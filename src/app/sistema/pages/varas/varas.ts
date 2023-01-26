@@ -4,7 +4,7 @@ import { Comarca } from "../comarcas/comarcas";
 export interface Vara{
     id?: number,
     comarca_id: number,
-    comcarca: Comarca,
+    comarca: Comarca,
     nome: string,
     email: string,
     telefone1: string,

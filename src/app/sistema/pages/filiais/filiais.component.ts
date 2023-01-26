@@ -1,33 +1,32 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
 import { SharedService } from "src/app/shared/shared.service";
-import { Escritorio, Escritorios } from "./escritorios";
-import { EscritoriosService } from "./escritorios.service";
-import { FormularioEscritoriosComponent } from "./formulario/formulario-escritorios.component";
+import { Filiais, Filial } from "./filiais";
+import { FiliaisService } from "./filiais.service";
+import { FormularioFiliaisComponent } from "./formulario/formulario-filiais.component";
 
 @Component({
-    selector: 'app-escritorios',
-    templateUrl: './escritorios.component.html',
-    styleUrls: ['./escritorios.component.css']
+    selector: 'app-filiais',
+    templateUrl: './filiais.component.html',
+    styleUrls: ['./filiais.component.css']
 })
 
-export class EscritoriosComponent implements OnInit, OnDestroy{
+export class FiliaisComponent{
+    data$!: Observable<Filiais>;
+    excluir!: Filial;
 
-    data$!: Observable<Escritorios>;
-    excluir!: Escritorio;
-
-    @ViewChild(FormularioEscritoriosComponent) child! : FormularioEscritoriosComponent;
+    @ViewChild(FormularioFiliaisComponent) child! : FormularioFiliaisComponent;
     @ViewChild(DataTableDirective, {static: false})  dtElement!: DataTableDirective;
 
     dtOptions: DataTables.Settings = {};
 
     // We use this trigger because fetching the list of persons can be quite long,
   // thus we ensure the data is fetched before rendering
-  dtTrigger: Subject<any> = new Subject<Escritorios>();
+  dtTrigger: Subject<any> = new Subject<Filiais>();
 
   constructor( private sharedService: SharedService,
-    private escritoriosService: EscritoriosService) {}
+    private filiaisService: FiliaisService) {}
 
     ngOnInit(): void {
         this.dtOptions = {
@@ -38,7 +37,7 @@ export class EscritoriosComponent implements OnInit, OnDestroy{
             order: [3, 'asc'],
           };
 
-          this.data$ = this.escritoriosService.index().pipe(tap(() => {
+          this.data$ = this.filiaisService.index().pipe(tap(() => {
             this.dtTrigger.next(this.data$);
           }));
     }
@@ -49,7 +48,7 @@ export class EscritoriosComponent implements OnInit, OnDestroy{
       }
     
       refresh(){
-        this.data$ = this.escritoriosService.index().pipe(tap(() => {
+        this.data$ = this.filiaisService.index().pipe(tap(() => {
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             // Destroy the table first
             dtInstance.destroy();
@@ -66,25 +65,25 @@ export class EscritoriosComponent implements OnInit, OnDestroy{
         this.child.resetar();
       }
     
-      edit(data: Escritorio){
+      edit(data: Filial){
         //console.log(data);
         this.child.setForm(data);
       }
     
-      delete(data: Escritorio){
+      delete(data: Filial){
         this.excluir = data;
       }
     
       confirm(id?: number){
-        this.escritoriosService.destroy(id || 0).subscribe({
+        this.filiaisService.destroy(id || 0).subscribe({
           next: (data) => {
             this.sharedService.toast('Sucesso!', data as string , 3);
-            this.excluir = {} as Escritorio;
+            this.excluir = {} as Filial;
             this.refresh();
           },
           error: (error) => {
             this.sharedService.toast('Error!', error.erro as string , 2);
           }
         })
-    }
+      }
 }
