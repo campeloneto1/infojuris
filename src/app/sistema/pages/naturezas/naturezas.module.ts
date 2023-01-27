@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TituloModule } from '../../components/titulo/titulo.module';
 import { FormularioNaturezasComponent } from './formulario/formulario-naturezas.component';
 import { NaturezasComponent } from './naturezas.component';
 
 @NgModule({
   declarations: [NaturezasComponent, FormularioNaturezasComponent],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, TituloModule],
   exports: [],
 })
 export class NaturezasModule {}

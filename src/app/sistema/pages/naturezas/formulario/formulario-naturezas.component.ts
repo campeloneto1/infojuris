@@ -62,6 +62,7 @@ export class FormularioNaturezasComponent implements OnInit {
           this.refresh.emit();
         },
         error: (error) => {
+          //console.log(error)
           this.sharedService.toast('Error!', error.erro as string, 2);
         },
       });

@@ -1,0 +1,200 @@
+<form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
+    <div class="row">      
+  
+      <app-input-text
+        class="col-sm-4"
+        [label]="'Nome'"
+        [id]="'nome'"
+        [tipo]="'text'"
+        formControlName="nome"
+       />
+
+      <app-input-text
+        class="col-sm-2"
+        [label]="'CPF'"
+        [id]="'cpf'"
+        [tipo]="'text'"
+        [mascara]="'000.000.000-00'"
+        formControlName="cpf" />
+
+        <app-input-text
+        class="col-sm-2"
+        [label]="'Data Nascimento'"
+        [id]="'data_nascimento'"
+        [tipo]="'date'"
+        formControlName="data_nascimento" />
+
+        <app-input-select
+        
+        class="col-sm-2"
+        [label]="'Nacionalidade'"
+        [id]="'nacionalidade_id'"
+        [data$]="paises$"
+        formControlName="nacionalidade_id"
+       />
+
+       <app-input-select
+        
+        class="col-sm-2"
+        [label]="'Ocupação'"
+        [id]="'ocupacao_id'"
+        [data$]="ocupacoes$"
+        formControlName="ocupacao_id"
+       />
+  
+     
+    </div>
+    <div class="row">
+        <app-input-text
+        class="col-sm-4"
+        [label]="'Mãe'"
+        [id]="'mae'"
+        [tipo]="'text'"
+        formControlName="mae"
+      />
+      <app-input-text
+        class="col-sm-4"
+        [label]="'Pai'"
+        [id]="'pai'"
+        [tipo]="'text'"
+        formControlName="pai"
+      />
+
+      <app-input-select
+        
+        class="col-sm-2"
+        [label]="'Sexo'"
+        [id]="'sexo_id'"
+        [data$]="sexos$"
+        formControlName="sexo_id"
+       />
+
+       <app-input-select
+        
+        class="col-sm-2"
+        [label]="'Estado Civil'"
+        [id]="'estado_civil'"
+        [data$]="estadoscivis$"
+        formControlName="estado_civil"
+       />
+    </div>
+    <div class="row">
+      <app-input-text
+      class="col-sm-4"
+      [label]="'E-mail'"
+      [id]="'email'"
+      [tipo]="'email'"
+      formControlName="email"
+    />
+    
+      <app-input-text
+        class="col-sm-2"
+        [label]="'Telefone 1'"
+        [id]="'telefone1'"
+        [tipo]="'text'"
+        [mascara]="'(00) 0000-0000||(00) 0 0000-0000'"     
+        formControlName="telefone1"
+        
+      />
+      
+      <app-input-text
+        class="col-sm-2"
+        [label]="'Telefone 2'"
+        [id]="'telefone2'"
+        [tipo]="'text'"
+        [mascara]="'(00) 0000-0000||(00) 0 0000-0000'"     
+        formControlName="telefone2"
+        
+      />
+    </div>
+  
+    <div class="row">
+  
+      <app-input-select
+        (ngModelChange)="getEstados()"
+        class="col-sm-2"
+        [label]="'País'"
+        [id]="'pais_id'"
+        [data$]="paises$"
+        formControlName="pais_id"
+      />
+  
+      <app-input-select
+       
+        (ngModelChange)="getCidades()"
+        class="col-sm-2"
+        [label]="'Estado'"
+        [id]="'estado_id'"
+        [data$]="estados$"
+        formControlName="estado_id"
+      />
+  
+      <app-input-select
+        class="col-sm-2"
+        [label]="'Cidade'"
+        [id]="'cidade_id'"
+        [data$]="cidades$"
+        formControlName="cidade_id"
+      />
+  
+    </div>
+    <div class="row">
+      <app-input-text
+        class="col-sm-4"
+        [label]="'Rua'"
+        [id]="'rua'"
+        [tipo]="'text'"
+        formControlName="rua"
+      />
+  
+      <app-input-text
+        class="col-sm-2"
+        [label]="'Número'"
+        [id]="'numero'"
+        [tipo]="'text'"
+        formControlName="numero"
+      />
+  
+      <app-input-text
+        class="col-sm-4"
+        [label]="'Complemento'"
+        [id]="'complemento'"
+        [tipo]="'text'"
+        formControlName="complemento"
+      />
+  
+      <app-input-text
+        class="col-sm-2"
+        [label]="'CEP'"
+        [id]="'cep'"
+        [tipo]="'text'"
+        [mascara]="'00000-000'"
+        formControlName="cep"
+  
+      />
+    </div>
+  
+    <hr />
+  
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button
+          type="button"
+          class="btn btn-link text-danger"
+          data-bs-dismiss="modal"
+        >
+          Fechar
+        </button>
+        <!--[disabled]="form.invalid"-->
+        <button
+          [disabled]="form.invalid"
+          data-bs-dismiss="modal"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Salvar
+        </button>
+      </div>
+    </div>
+  </form>
+  

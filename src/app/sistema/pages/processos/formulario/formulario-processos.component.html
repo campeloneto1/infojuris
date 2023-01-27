@@ -1,0 +1,121 @@
+<form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
+    <div class="row">
+      <app-input-text
+        class="col-sm-3"
+        [label]="'NUP'"
+        [id]="'codigo'"
+        [tipo]="'text'"
+        [mascara]="'0000000-00.0000.0.00.0000'"
+        formControlName="codigo"
+       />
+    </div>
+
+    <div class="row">  
+        
+        <app-input-select
+        (ngModelChange)="getComarcas()"
+        class="col-sm-2"
+        [label]="'Tribunal'"
+        [id]="'tribunal_id'"
+        [data$]="tribunais$"
+        formControlName="tribunal_id"
+      />
+  
+      <app-input-select
+       
+        (ngModelChange)="getVaras()"
+        class="col-sm-2"
+        [label]="'Comarca'"
+        [id]="'comarca_id'"
+        [data$]="comarcas$"
+        formControlName="comarca_id"
+      />
+  
+      <app-input-select
+        class="col-sm-2"
+        [label]="'Vara'"
+        [id]="'vara_id'"
+        [data$]="varas$"
+        formControlName="vara_id"
+      />
+
+      <app-input-select
+        class="col-sm-2"
+        [label]="'Natureza'"
+        [id]="'natureza_id'"
+        [data$]="naturezas$"
+        formControlName="natureza_id"
+      />
+  
+      
+
+       <app-input-text
+       class="col-sm-2"
+       [label]="'Data'"
+       [id]="'data'"
+       [tipo]="'date'"
+       formControlName="data" />
+
+    </div>
+    <div class="row">
+
+       <app-input-select
+        class="col-sm-4"
+        [label]="'Autor'"
+        [id]="'autor_id'"
+        [data$]="clientes$"
+        formControlName="autor_id"
+      />
+
+      <app-input-select
+        class="col-sm-4"
+        [label]="'Reu'"
+        [id]="'reu_id'"
+        [data$]="clientes$"
+        formControlName="reu_id"
+      />
+
+      <app-input-text
+        class="col-sm-2"
+        [label]="'Valor'"
+        [id]="'valor'"
+        [tipo]="'text'"
+        [mascara]="'separator.2'"
+        formControlName="valor"
+       />
+
+    </div>
+    <div class="row">
+        <app-input-text
+        class="col-sm-12"
+        [label]="'Observações'"
+        [id]="'obs'"
+        [tipo]="'textarea'"
+        formControlName="obs"
+       />
+    </div>
+
+    <hr />
+  
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button
+          type="button"
+          class="btn btn-link text-danger"
+          data-bs-dismiss="modal"
+        >
+          Fechar
+        </button>
+        <!--[disabled]="form.invalid"-->
+        <button
+          [disabled]="form.invalid"
+          data-bs-dismiss="modal"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Salvar
+        </button>
+      </div>
+    </div>
+  </form>
+  

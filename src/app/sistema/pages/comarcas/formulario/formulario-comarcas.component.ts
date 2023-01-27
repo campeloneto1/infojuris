@@ -120,8 +120,4 @@ export class FormularioComarcasComponent{
       });
     }
   }
-
-  editar(data: Comarca) {
-    this.form.patchValue(data);
-  }
 }

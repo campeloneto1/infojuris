@@ -20,6 +20,8 @@ import { CidadesModule } from './pages/cidades/cidades.module';
 import { ComarcasModule } from './pages/comarcas/comarcas.module';
 import { VarasModule } from './pages/varas/varas.module';
 import { FiliaisModule } from './pages/filiais/filiais.module';
+import { ClientesModule } from './pages/clientes/clientes.module';
+import { ProcessosModule } from './pages/processos/processos.module';
 
 
 @NgModule({
@@ -32,12 +34,14 @@ import { FiliaisModule } from './pages/filiais/filiais.module';
     SidebarModule,
     HttpClientModule,
     CidadesModule,
+    ClientesModule,
     ComarcasModule,
     EscritoriosModule,
     EstadosModule,
     FiliaisModule,
     NaturezasModule,
     PaisesModule,
+    ProcessosModule,
     OcupacoesModule,
     UsuariosModule,
     TribunaisModule,

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CidadesComponent } from './pages/cidades/cidades.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 import { ComarcasComponent } from './pages/comarcas/comarcas.component';
 import { EscritoriosComponent } from './pages/escritorios/escritorios.component';
 import { EstadosComponent } from './pages/estados/estados.component';
@@ -9,6 +10,7 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { NaturezasComponent } from './pages/naturezas/naturezas.component';
 import { OcupacoesComponent } from './pages/ocupacoes/ocupacoes.component';
 import { PaisesComponent } from './pages/paises/paises.component';
+import { ProcessosComponent } from './pages/processos/processos.component';
 import { TribunaisComponent } from './pages/tribunais/tribunais.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { VarasComponent } from './pages/varas/varas.component';
@@ -27,6 +29,11 @@ const routes: Routes = [
         path: 'Cidades',
         //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
         component: CidadesComponent,
+      },
+      {
+        path: 'Clientes',
+        //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
+        component: ClientesComponent,
       },
       {
         path: 'Comarcas',
@@ -62,6 +69,11 @@ const routes: Routes = [
         path: 'Paises',
         //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
         component: PaisesComponent,
+      },
+      {
+        path: 'Processos',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        component: ProcessosComponent,
       },
       {
         path: 'Tribunais',
