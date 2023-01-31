@@ -20,6 +20,7 @@ import { SexosComponent } from './pages/sexos/sexos.component';
 import { EstadosCivisComponent } from './pages/estados-civis/estados-civis.component';
 import { AudienciasComponent } from './pages/audiencias/audiencias.component';
 import { ProcessoComponent } from './pages/processos/processo/processo.component';
+import { AgendaComponent } from './pages/agenda/agenda.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
       {
         path: 'Inicio',
         component: InicioComponent,
+      },
+      {
+        path: 'Agenda',
+        //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
+        component: AgendaComponent,
       },
       {
         path: 'Audiencias',

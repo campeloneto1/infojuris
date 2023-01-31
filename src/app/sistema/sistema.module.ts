@@ -26,6 +26,7 @@ import { EstadosCivisModule } from './pages/estados-civis/estados-civis.module';
 import { SexosModule } from './pages/sexos/sexos.module';
 import { StatusModule } from './pages/status/status.module';
 import { AudienciasModule } from './pages/audiencias/audiencias.module';
+import { AgendaModule } from './pages/agenda/agenda.module';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { AudienciasModule } from './pages/audiencias/audiencias.module';
     NavbarModule,
     SidebarModule,
     HttpClientModule,
+    AgendaModule,
     AudienciasModule,
     CidadesModule,
     ComarcasModule,

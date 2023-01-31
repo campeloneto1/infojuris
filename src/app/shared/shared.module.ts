@@ -7,6 +7,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { InputSelectModule } from '../sistema/components/input-select/input-select.module';
 import { InputTextModule } from '../sistema/components/input-text/input-text.module';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 
@@ -19,7 +21,11 @@ import { InputTextModule } from '../sistema/components/input-text/input-text.mod
     SelectDropDownModule,
     ReactiveFormsModule,
     InputTextModule,
-    InputSelectModule
+    InputSelectModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [provideNgxMask()],
   exports: [
@@ -30,7 +36,8 @@ import { InputTextModule } from '../sistema/components/input-text/input-text.mod
     ReactiveFormsModule,
     InputTextModule,
     InputSelectModule,
-    RouterModule
+    RouterModule,
+    CalendarModule
   ],
 })
 export class SharedModule {}
