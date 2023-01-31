@@ -70,7 +70,4 @@ export class FormularioPaisesComponent{
     }
   }
 
-  editar(data: Pais) {
-    this.form.patchValue(data);
-  }
 }

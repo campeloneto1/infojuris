@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">    
+
+    <div class="row">  
+        
+        <app-input-select       
+        class="col-sm-4"
+        [label]="'Pessoa'"
+        [id]="'pessoa_id'"
+        [data$]="pessoas$"
+        formControlName="pessoa_id"
+      />
+
+    </div>
+
+    <hr />
+  
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button
+          type="button"
+          class="btn btn-link text-danger"
+          data-bs-dismiss="modal"
+        >
+          Fechar
+        </button>
+        <!--[disabled]="form.invalid"-->
+        <button
+          [disabled]="form.invalid"          
+          type="submit"
+          class="btn btn-primary"
+        >
+          Salvar
+        </button>
+      </div>
+    </div>
+  </form>
+  

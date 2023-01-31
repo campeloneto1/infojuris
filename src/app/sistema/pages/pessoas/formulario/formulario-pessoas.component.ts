@@ -3,68 +3,39 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Cidades } from '../../cidades/cidades';
+import { EstadosCivis } from '../../estados-civis/estados-civis';
+import { EstadosCivisService } from '../../estados-civis/estados-civis.service';
 import { Estados } from '../../estados/estados';
 import { Ocupacoes } from '../../ocupacoes/ocupacoes';
 import { OcupacoesService } from '../../ocupacoes/ocupacoes.service';
 import { Paises } from '../../paises/paises';
-import { Cliente } from '../clientes';
-import { ClientesService } from '../clientes.service';
+import { Sexos } from '../../sexos/sexos';
+import { SexosService } from '../../sexos/sexos.service';
+import { Pessoa } from '../pessoas';
+import { PessoasService } from '../pessoas.service';
 
 @Component({
-  selector: 'app-formulario-clientes',
-  templateUrl: './formulario-clientes.component.html',
-  styleUrls: ['./formulario-clientes.component.css'],
+  selector: 'app-formulario-pessoas',
+  templateUrl: './formulario-Pessoas.component.html',
+  styleUrls: ['./formulario-Pessoas.component.css'],
 })
-export class FormularioClientesComponent {
-  @Output('refresh') refresh: EventEmitter<Cliente> = new EventEmitter();
+export class FormularioPessoasComponent {
+  @Output('refresh') refresh: EventEmitter<Pessoa> = new EventEmitter();
   protected form!: FormGroup;
 
   protected ocupacoes$!: Observable<Ocupacoes>;
   protected paises$!: Observable<Paises>;
   protected estados$!: Observable<Estados>;
   protected cidades$!: Observable<Cidades>;
+  protected estadoscivis$!: Observable<EstadosCivis>;
+  protected sexos$!: Observable<Sexos>;
 
-  protected sexos$: Observable<any> = of([
-    {
-      id: 1,
-      nome: 'Masculino',
-    },
-    {
-      id: 2,
-      nome: 'Feminino',
-    },
-    {
-      id: 3,
-      nome: 'Não Informado',
-    },
-  ]);
-
-  protected estadoscivis$: Observable<any> = of([
-    {
-      id: 1,
-      nome: 'Solteiro',
-    },
-    {
-      id: 2,
-      nome: 'Casado',
-    },
-    {
-      id: 3,
-      nome: 'Divorciado',
-    },
-    {
-      id: 4,
-      nome: 'Viúvo',
-    },
-    {
-      id: 5,
-      nome: 'União Estável',
-    },
-  ]);
 
   constructor(
-    private clientesService: ClientesService,
+    private PessoasService: PessoasService,
     private ocupacoesService: OcupacoesService,
+    private estadosCivisService: EstadosCivisService,
+    private sexosService: SexosService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder
   ) {}
@@ -87,7 +58,7 @@ export class FormularioClientesComponent {
       ],
       data_nascimento: ['', Validators.compose([Validators.required])],
 
-      estado_civil: [''],
+      estado_civil_id: [''],
       sexo_id: [''],
       nacionalidade_id: [''],
       ocupacao_id: [''],
@@ -100,14 +71,16 @@ export class FormularioClientesComponent {
 
       rua: [''],
       numero: [''],
-      pais_id: ['', [Validators.required]],
-      estado_id: ['', [Validators.required]],
-      cidade_id: ['', [Validators.required]],
+      pais_id: [''],
+      estado_id: [''],
+      cidade_id: [''],
       complemento: [''],
       cep: [''],
     });
 
     this.ocupacoes$ = this.ocupacoesService.index();
+    this.sexos$ = this.sexosService.index();
+    this.estadoscivis$ = this.estadosCivisService.index();
     this.paises$ = this.sharedService.getPaises();
   }
 
@@ -123,7 +96,7 @@ export class FormularioClientesComponent {
     }
   }
 
-  setForm(data: Cliente) {
+  setForm(data: Pessoa) {
     this.form.patchValue(data);
     if (data.cidade.estado_id) {
       this.form.get('estado_id')?.patchValue(data.cidade.estado_id);
@@ -142,7 +115,7 @@ export class FormularioClientesComponent {
   cadastrar() {
     //console.log(this.form.value);
     if (this.form.value.id) {
-      this.clientesService.update(this.form.value as Cliente).subscribe({
+      this.PessoasService.update(this.form.value as Pessoa).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 3);
           this.form.reset();
@@ -153,7 +126,7 @@ export class FormularioClientesComponent {
         },
       });
     } else {
-      this.clientesService.store(this.form.value as Cliente).subscribe({
+      this.PessoasService.store(this.form.value as Pessoa).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 1);
           this.form.reset();

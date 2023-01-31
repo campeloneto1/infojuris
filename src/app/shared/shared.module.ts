@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
@@ -28,7 +29,8 @@ import { InputTextModule } from '../sistema/components/input-text/input-text.mod
     SelectDropDownModule,
     ReactiveFormsModule,
     InputTextModule,
-    InputSelectModule
+    InputSelectModule,
+    RouterModule
   ],
 })
 export class SharedModule {}

@@ -1,0 +1,258 @@
+<div class="content-wrapper">
+    <app-titulo title="Audências" />
+  
+    <section class="content">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#modalcad"
+              class="btn btn-outline-primary"
+              (click)="resetarForm()"
+            >
+              <i class="nav-icon fa fa-plus"></i>
+            </button>
+          </h3>
+        </div>
+        <div class="card-body p-2">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="table table-hover table-head-fixed text-nowrap"
+          >
+            <thead>
+              <tr>
+                <th>#</th>               
+                <th>Escritório</th> 
+                <th>Processo</th> 
+                <th>Vara</th> 
+                <th>Natureza</th>    
+                <th>Data</th>    
+                <th>Hora</th>    
+                <th>Tipo</th>    
+                <th>Testemunhas</th>     
+                <!--<th>Status</th>         -->
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <!-- -->
+            <tbody *ngIf="data$ | async as data; else loading">
+              <tr *ngFor="let row of data" class="optionshover">
+                <td>{{ row.id }}</td>   
+                <td>{{ row.processo.escritorio?.nome }}</td> 
+                <td><a [routerLink]="['/Processo', row.processo.id]">{{ row.processo.codigo | mask: "0000000-00.0000.0.00.0000"}}</a></td> 
+                <td>{{ row.processo.vara.nome }} - {{ row.processo.vara.comarca.nome }} - {{ row.processo.vara.comarca.tribunal.nome }}</td> 
+                <td>{{ row.processo.natureza.nome }}</td>
+                <td>{{ row.data | date: 'dd/MM/yyyy'}}</td>
+                <td>{{ row.hora}}</td>
+                <td>
+                    <span *ngIf="row.tipo_id == 1">Presencial</span>
+                    <span *ngIf="row.tipo_id == 2"><a target="_blank" [href]="row.link">On-Line <i class="fa fa-link" aria-hidden="true"></i></a></span>
+                </td>
+                <td>
+                  <a 
+                    (click)="setAudiencia(row)" 
+                    class="btn btn-link"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modaltestemunhas"
+                  >
+                    <i class="fa fa-align-justify" aria-hidden="true"></i> Testemunhas 
+                </a>
+                </td>
+                
+                
+                <!--<td>
+                  <span *ngIf="row.status.aberto" class="padd badge text-bg-info">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.concluido" class="padd badge text-bg-success">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.cancelado" class="padd badge text-bg-danger">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.andamento" class="padd badge text-bg-primary">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.incidente" class="padd badge text-bg-warning">{{row.status.nome}}</span>
+                </td>-->
+                <td>
+                  <a
+                    class="options"
+                    (click)="edit(row)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalcad"
+                  >
+                    <i
+                      class="fas fa-edit text-primary point"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <a
+                    class="options"
+                    (click)="delete(row)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modaldel"
+                  >
+                    <i
+                      class="fas fa-trash text-danger point ml-2"
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-template #loading>
+            <tbody class="text-center">
+              <tr>
+                <td colspan="100%">
+                  <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                </td>
+              </tr>
+            </tbody>
+          </ng-template>
+        </div>
+      </div>
+  
+      <div class="modal fade" id="modalcad" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Cadastrar</h4>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <app-formulario-audiencias
+                (refresh)="refresh()"
+              />
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modaltestemunhas" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Tertemunhas</h4>
+              <button
+               
+                class="btn btn-outline-primary"
+                (click)="cadtest = true;"
+              >
+                <i class="nav-icon fa fa-plus"></i>
+              </button>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="audiencia">
+              
+              <app-formulario-audiencias-pessoas
+                *ngIf="cadtest" (refresh2)="refresh2()" [audiencia_id]="audiencia.id || 0"
+              />
+
+              <div *ngIf="deltest" class="card card-outline card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Excluir pessoa</h3>
+                </div>
+                <div class="card-body">
+                  Tem certeza que deseja excluir <b>{{excluirPessoa.nome}}</b>
+                </div>
+                <div class="card-footer">
+                  <button (click)="deltest = false;" class="btn btn-link">Cancelar</button>
+                  <button (click)="confirmPessoa(excluirPessoa.pivot.id)" class="btn btn-danger">Confirmar</button>
+                </div>
+              </div>
+             
+
+              <table
+                class="margintop table table-hover table-head-fixed text-nowrap"
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>               
+                    <th>Nome</th> 
+                    <th>CPF</th>    
+                    <th>E-mail</th>    
+                    <th>Telefone 1</th>         
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <!-- -->
+                <tbody *ngIf="audiencia.pessoas.length > 0">
+                  <tr *ngFor="let row of audiencia.pessoas" class="optionshover">
+                    <td>{{ row.id }}</td>   
+                    <td>{{ row.nome }}</td> 
+                    <td>{{ row.cpf | mask: '000.000.000-00' }}</td>  
+                    <td>{{ row.email }}</td>              
+                    <td>{{ row.telefone1 | mask: '(00) 0 0000-0000' }}</td> 
+                    <td>
+                      
+                      <a
+                        class="options"
+                        (click)="deletePessoa(row)"
+                     
+                      >
+                        <i
+                          class="fas fa-trash text-danger point ml-2"
+                          aria-hidden="true"
+                        ></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modaldel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" *ngIf="excluir">
+            <div class="modal-header">
+              <h4 class="modal-title">Excluir</h4>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Tem certeza que deseja excluir a audiÊncia do processo <b>{{ excluir.processo.codigo }}</b
+                >?
+              </p>
+            </div>
+            <div class="modal-footer justify-right">
+              <button type="button" class="btn btn-link" data-bs-dismiss="modal">
+                Fechar
+              </button>
+              <button
+                (click)="confirm(excluir.id)"
+                data-bs-dismiss="modal"
+                type="button"
+                class="btn btn-danger"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  

@@ -1,6 +1,8 @@
 import { Time } from "@angular/common";
 import { Cidade } from "../cidades/cidades";
+import { Pessoas } from "../pessoas/pessoas";
 import { Processo } from "../processos/processos";
+import { Status } from "../status/status";
 
 export interface Audiencia{
     id?: number,
@@ -17,8 +19,10 @@ export interface Audiencia{
     cidade_id?: number,
     cidade?: Cidade,
     cep?: string,
-    status: number,
+    status_id: number,
+    status: Status,
     obs: string,
+    pessoas: Pessoas
 }
 
 export type Audiencias = Array<Audiencia>;

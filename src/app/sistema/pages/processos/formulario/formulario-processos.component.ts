@@ -2,8 +2,6 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { SharedService } from "src/app/shared/shared.service";
-import { Clientes } from "../../clientes/clientes";
-import { ClientesService } from "../../clientes/clientes.service";
 import { Comarcas } from "../../comarcas/comarcas";
 import { Naturezas } from "../../naturezas/naturezas";
 import { NaturezasService } from "../../naturezas/naturezas.service";
@@ -22,7 +20,6 @@ export class FormularioProcessosComponent{
     @Output('refresh') refresh: EventEmitter<Processo> = new EventEmitter();
   protected form!: FormGroup;
 
-  protected clientes$!: Observable<Clientes>;
   protected tribunais$!: Observable<Tribunais>;
   protected comarcas$!: Observable<Comarcas>;
   protected varas$!: Observable<Varas>;
@@ -30,7 +27,6 @@ export class FormularioProcessosComponent{
 
   constructor(
     private processosService: ProcessosService,
-    private clientesService: ClientesService,
     private naturezasService: NaturezasService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder
@@ -44,8 +40,6 @@ export class FormularioProcessosComponent{
       tribunal_id: ['', [Validators.required]],
       comarca_id: ['', [Validators.required]],
       vara_id: ['', [Validators.required]],
-      autor_id: ['', [Validators.required]],
-      reu_id: ['', [Validators.required]],
       codigo: [
         '',
         Validators.compose([
@@ -60,7 +54,7 @@ export class FormularioProcessosComponent{
     });
 
     this.tribunais$ = this.sharedService.getTribunais();
-    this.clientes$ = this.clientesService.index();
+
     this.naturezas$ = this.naturezasService.index();
  
   }

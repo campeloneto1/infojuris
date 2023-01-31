@@ -20,6 +20,14 @@ export class ProcessosService{
       where(id: number): Observable<Processos> {
         return this.http.get<Processos>(`${API}/processos/${id}/where`);
       }
+
+      show(id: number): Observable<Processo> {
+        return this.http.get<Processo>(`${API}/processos/${id}`);
+      }
+
+      changeStatus(data: Processo){
+        return this.http.post(`${API}/processos-status`,data);
+      }
     
       store(data: Processo){
         return this.http.post(`${API}/processos`,data);

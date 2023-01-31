@@ -29,8 +29,9 @@
                 <th>Vara</th> 
                 <th>Natureza</th>    
                 <th>Código</th>    
-                <th>Autor</th>    
-                <th>Reu</th>     
+                <th>Autores</th>    
+                <th>Réus</th>    
+                <th>Valor</th>     
                 <th>Status</th>         
                 <th>Opções</th>
               </tr>
@@ -39,38 +40,69 @@
             <tbody *ngIf="data$ | async as data; else loading">
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{ row.id }}</td>   
-                <td>{{ row.escritorio.nome }}</td> 
+                <td>{{ row.escritorio?.nome }}</td> 
                 <td>{{ row.vara.nome }} - {{ row.vara.comarca.nome }} - {{ row.vara.comarca.tribunal.nome }}</td> 
                 <td>{{ row.natureza.nome }}</td>
 
-                <td>{{ row.codigo | mask: "0000000-00.0000.0.00.0000"}}</td> 
-                <td>{{ row.autor.nome }}</td>
-                <td>{{ row.reu.nome }}</td>
+                <td><a [routerLink]="['/Processo', row.id]">{{ row.codigo | mask: "0000000-00.0000.0.00.0000"}}</a></td> 
                 <td>
-                  <span *ngIf="row.status == 1" class="badge text-bg-primary">Protocolado</span>
-                  <span *ngIf="row.status == 2" class="badge text-bg-success">Concluído</span>
-                  <span *ngIf="row.status == 3" class="badge text-bg-danger">Cancelado</span>
+                  <a 
+                    (click)="setProcesso(row)" 
+                    class="btn btn-link"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalautores"
+                  >
+                    <i class="fa fa-align-justify" aria-hidden="true"></i> Autores ({{filtro(row.pessoas, 1).length}})
+                </a>
+                </td>
+                <td>
+                  <a 
+                  (click)="setProcesso(row)" 
+                  class="btn btn-link"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalreus">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i> Réus ({{filtro(row.pessoas, 2).length}})
+                  </a>
+                </td>
+                <td>R$ {{ row.valor | mask: "separator.2"}}</td>
+                <td>
+                  <span *ngIf="row.status.aberto" class="padd badge text-bg-info">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.concluido" class="padd badge text-bg-success">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.cancelado" class="padd badge text-bg-danger">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.andamento" class="padd badge text-bg-primary">{{row.status.nome}}</span>
+                  <span *ngIf="row.status.incidente" class="padd badge text-bg-warning">{{row.status.nome}}</span>
                 </td>
                 <td>
                   <a
                     class="options"
+                    (click)="changeStatus(row)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalstatus"
+                  >
+                    <i
+                      class="fa fa-retweet text-primary point"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <a
+                    class="options ml-2"
                     (click)="edit(row)"
                     data-bs-toggle="modal"
                     data-bs-target="#modalcad"
                   >
                     <i
-                      class="fas fa-edit text-primary point"
+                      class="fas fa-edit text-primary point "
                       aria-hidden="true"
                     ></i>
                   </a>
                   <a
-                    class="options"
+                    class="options  ml-2"
                     (click)="delete(row)"
                     data-bs-toggle="modal"
                     data-bs-target="#modaldel"
                   >
                     <i
-                      class="fas fa-trash text-danger point ml-2"
+                      class="fas fa-trash text-danger point"
                       aria-hidden="true"
                     ></i
                   ></a>
@@ -108,6 +140,194 @@
               <app-formulario-processos
                 (refresh)="refresh()"
               />
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalstatus" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Alterar Status Processo</h4>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="status">
+                <app-formulario-processos-status (refresh)="refresh()" [processo_id]="status.id || 0" [status_id]="status.status_id || 0" />
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalautores" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Autores</h4>
+              <button
+               
+                class="btn btn-outline-primary"
+                (click)="cadautor = true;"
+              >
+                <i class="nav-icon fa fa-plus"></i>
+              </button>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="processo">
+              
+              <app-formulario-processos-pessoas
+                *ngIf="cadautor" (refresh2)="refresh2()" [processo_id]="processo.id || 0" [tipo_id]="1"
+              />
+
+              <div *ngIf="delautor" class="card card-outline card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Excluir pessoa</h3>
+                </div>
+                <div class="card-body">
+                  Tem certeza que deseja excluir <b>{{excluirPessoa.nome}}</b>
+                </div>
+                <div class="card-footer">
+                  <button (click)="delautor = false;" class="btn btn-link">Cancelar</button>
+                  <button (click)="confirmPessoa(excluirPessoa.pivot.id)" class="btn btn-danger">Confirmar</button>
+                </div>
+              </div>
+             
+
+              <table
+                class="margintop table table-hover table-head-fixed text-nowrap"
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>               
+                    <th>Nome</th> 
+                    <th>CPF</th>    
+                    <th>E-mail</th>    
+                    <th>Telefone 1</th>         
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <!-- -->
+                <tbody *ngIf="processo.pessoas.length > 0">
+                  <tr *ngFor="let row of filtro(processo.pessoas, 1)" class="optionshover">
+                    <td>{{ row.id }}</td>   
+                    <td>{{ row.nome }}</td> 
+                    <td>{{ row.cpf | mask: '000.000.000-00' }}</td>  
+                    <td>{{ row.email }}</td>              
+                    <td>{{ row.telefone1 | mask: '(00) 0 0000-0000' }}</td> 
+                    <td>
+                      
+                      <a
+                        class="options"
+                        (click)="deletePessoaAutor(row)"
+                     
+                      >
+                        <i
+                          class="fas fa-trash text-danger point ml-2"
+                          aria-hidden="true"
+                        ></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalreus" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Réus</h4>
+              <button
+               
+                class="btn btn-outline-primary"
+                (click)="cadreu = true;"
+              >
+                <i class="nav-icon fa fa-plus"></i>
+              </button>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="processo">
+              <app-formulario-processos-pessoas
+               *ngIf="cadreu" (refresh2)="refresh2()" [processo_id]="processo.id || 0" [tipo_id]="2"
+              />
+
+              <div *ngIf="delreu" class="card card-outline card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Excluir pessoa</h3>
+                </div>
+                <div class="card-body">
+                  Tem certeza que deseja excluir <b>{{excluirPessoa.nome}}</b>?
+                </div>
+                <div class="card-footer">
+                  <button (click)="delreu = false;" class="btn btn-link">Cancelar</button>
+                  <button (click)="confirmPessoa(excluirPessoa.pivot.id)" class="btn btn-danger">Confirmar</button>
+                </div>
+              </div>
+
+              <table
+                class="margintop table table-hover table-head-fixed text-nowrap"
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>               
+                    <th>Nome</th> 
+                    <th>CPF</th>    
+                    <th>E-mail</th>    
+                    <th>Telefone 1</th>         
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <!-- -->
+                <tbody *ngIf="processo.pessoas.length > 0">
+                  <tr *ngFor="let row of filtro(processo.pessoas, 2)" class="optionshover">
+                    <td>{{ row.id }}</td>   
+                    <td>{{ row.nome }}</td> 
+                    <td>{{ row.cpf | mask: '000.000.000-00' }}</td>  
+                    <td>{{ row.email }}</td>              
+                    <td>{{ row.telefone1 | mask: '(00) 0 0000-0000' }}</td> 
+                    <td>
+                      
+                      <a
+                        class="options"
+                        (click)="deletePessoaReu(row)"
+                       
+                      >
+                        <i
+                          class="fas fa-trash text-danger point ml-2"
+                          aria-hidden="true"
+                        ></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             
           </div>

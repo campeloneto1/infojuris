@@ -1,16 +1,15 @@
-import { Cliente } from "../clientes/clientes";
+import { Audiencias } from "../audiencias/audiencias";
 import { Escritorio } from "../escritorios/escritorios";
 import { Natureza } from "../naturezas/naturezas";
+import { Pessoas } from "../pessoas/pessoas";
+import { Status } from "../status/status";
 import { Vara } from "../varas/varas";
 
 export interface Processo{
     id?: number,
-    autor_id: number,
-    autor: Cliente,
-    reu_id: number,
-    reu: Cliente
+    audiencias: Audiencias,
     escritorio_id: number,
-    escritorio: Escritorio,
+    escritorio?: Escritorio,
     natureza_id: number,
     natureza: Natureza,
     vara_id: number,
@@ -19,7 +18,9 @@ export interface Processo{
     valor: number,
     data: Date,
     obs: string,
-    status: number,
+    status: Status,
+    status_id: number,
+    pessoas: Pessoas,
 
 }
 

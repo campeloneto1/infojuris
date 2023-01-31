@@ -20,8 +20,12 @@ import { CidadesModule } from './pages/cidades/cidades.module';
 import { ComarcasModule } from './pages/comarcas/comarcas.module';
 import { VarasModule } from './pages/varas/varas.module';
 import { FiliaisModule } from './pages/filiais/filiais.module';
-import { ClientesModule } from './pages/clientes/clientes.module';
+import { PessoasModule } from './pages/pessoas/pessoas.module';
 import { ProcessosModule } from './pages/processos/processos.module';
+import { EstadosCivisModule } from './pages/estados-civis/estados-civis.module';
+import { SexosModule } from './pages/sexos/sexos.module';
+import { StatusModule } from './pages/status/status.module';
+import { AudienciasModule } from './pages/audiencias/audiencias.module';
 
 
 @NgModule({
@@ -33,15 +37,19 @@ import { ProcessosModule } from './pages/processos/processos.module';
     NavbarModule,
     SidebarModule,
     HttpClientModule,
+    AudienciasModule,
     CidadesModule,
-    ClientesModule,
     ComarcasModule,
     EscritoriosModule,
     EstadosModule,
+    EstadosCivisModule,
     FiliaisModule,
     NaturezasModule,
     PaisesModule,
+    PessoasModule,
     ProcessosModule,
+    SexosModule,
+    StatusModule,
     OcupacoesModule,
     UsuariosModule,
     TribunaisModule,

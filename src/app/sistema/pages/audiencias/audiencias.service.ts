@@ -20,6 +20,10 @@ export class AudienciasService{
       where(id: number): Observable<Audiencias> {
         return this.http.get<Audiencias>(`${API}/audiencias/${id}/where`);
       }
+
+      show(id: number): Observable<Audiencia> {
+        return this.http.get<Audiencia>(`${API}/audiencias/${id}`);
+      }
     
       store(data: Audiencia){
         return this.http.post(`${API}/audiencias`,data);

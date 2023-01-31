@@ -2,31 +2,31 @@ import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
 import { SharedService } from "src/app/shared/shared.service";
-import { Cliente, Clientes } from "./clientes";
-import { ClientesService } from "./clientes.service";
-import { FormularioClientesComponent } from "./formulario/formulario-clientes.component";
+import { FormularioSexosComponent } from "./formulario/formulario-sexos.component";
+import { Sexo, Sexos } from "./sexos";
+import { SexosService } from "./sexos.service";
 
 @Component({
-    selector: 'app-clientes',
-    templateUrl: './clientes.component.html',
-    styleUrls: ['./clientes.component.css']
+    selector: 'app-sexos',
+    templateUrl: './sexos.component.html',
+    styleUrls: ['./sexos.component.css']
 })
 
-export class ClientesComponent{
-    data$!: Observable<Clientes>;
-    excluir!: Cliente;
+export class SexosComponent{
+    data$!: Observable<Sexos>;
+    excluir!: Sexo;
 
-    @ViewChild(FormularioClientesComponent) child! : FormularioClientesComponent;
+    @ViewChild(FormularioSexosComponent) child! : FormularioSexosComponent;
     @ViewChild(DataTableDirective, {static: false})  dtElement!: DataTableDirective;
 
     dtOptions: DataTables.Settings = {};
 
     // We use this trigger because fetching the list of persons can be quite long,
   // thus we ensure the data is fetched before rendering
-  dtTrigger: Subject<any> = new Subject<Clientes>();
+  dtTrigger: Subject<any> = new Subject<Sexos>();
 
   constructor( private sharedService: SharedService,
-    private clientesService: ClientesService) {}
+    private sexosService: SexosService) {}
 
     ngOnInit(): void {
         this.dtOptions = {
@@ -37,7 +37,7 @@ export class ClientesComponent{
             order: [3, 'asc'],
           };
 
-          this.data$ = this.clientesService.index().pipe(tap(() => {
+          this.data$ = this.sexosService.index().pipe(tap(() => {
             this.dtTrigger.next(this.data$);
           }));
     }
@@ -48,7 +48,7 @@ export class ClientesComponent{
       }
     
       refresh(){
-        this.data$ = this.clientesService.index().pipe(tap(() => {
+        this.data$ = this.sexosService.index().pipe(tap(() => {
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             // Destroy the table first
             dtInstance.destroy();
@@ -65,20 +65,20 @@ export class ClientesComponent{
         this.child.resetar();
       }
     
-      edit(data: Cliente){
+      edit(data: Sexo){
         //console.log(data);
         this.child.setForm(data);
       }
     
-      delete(data: Cliente){
+      delete(data: Sexo){
         this.excluir = data;
       }
     
       confirm(id?: number){
-        this.clientesService.destroy(id || 0).subscribe({
+        this.sexosService.destroy(id || 0).subscribe({
           next: (data) => {
             this.sharedService.toast('Sucesso!', data as string , 3);
-            this.excluir = {} as Cliente;
+            this.excluir = {} as Sexo;
             this.refresh();
           },
           error: (error) => {

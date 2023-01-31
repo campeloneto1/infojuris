@@ -30,7 +30,7 @@ export class InputSelectComponent{
   @Input() disabled: boolean = false;
 
   @Input() optionid: string = 'id';
-  @Input() optionname: string = 'nome';
+  @Input() optionname: any = 'nome';
   @Input() allowclear: boolean = true;
 
   onChange = (inputvalor:number) => {};

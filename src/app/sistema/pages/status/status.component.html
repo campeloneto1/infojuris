@@ -1,5 +1,5 @@
 <div class="content-wrapper">
-    <app-titulo title="Clientes" />
+    <app-titulo title="Status" />
   
     <section class="content">
       <div class="card">
@@ -25,23 +25,36 @@
             <thead>
               <tr>
                 <th>#</th>               
-                <th>Escritório</th> 
-                <th>Nome</th> 
-                <th>CPF</th>    
-                <th>E-mail</th>    
-                <th>Telefone 1</th>         
+                <th>Nome</th>    
+                <th>Aberto</th>    
+                <th>Andamento</th>               
+                <th>Concluído</th>    
+                <th>Incidente</th>    
+                <th>Cancelado</th>    
                 <th>Opções</th>
               </tr>
             </thead>
             <!-- -->
             <tbody *ngIf="data$ | async as data; else loading">
               <tr *ngFor="let row of data" class="optionshover">
-                <td>{{ row.id }}</td>   
-                <td>{{ row.escritorio?.nome }}</td> 
+                <td>{{ row.id }}</td>               
                 <td>{{ row.nome }}</td> 
-                <td>{{ row.cpf | mask: '000.000.000-00' }}</td>  
-                <td>{{ row.email }}</td>              
-                <td>{{ row.telefone1 | mask: '(00) 0 0000-0000' }}</td> 
+                <td>
+                  <span *ngIf="row.aberto"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                </td> 
+                <td>
+                  <span *ngIf="row.andamento"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                </td>  
+                <td>
+                  <span *ngIf="row.concluido"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                </td>  
+                <td>
+                  <span *ngIf="row.incidente"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                </td>               
+                <td>
+                  <span *ngIf="row.cancelado"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                </td>  
+                
                 <td>
                   <a
                     class="options"
@@ -96,9 +109,9 @@
               </button>
             </div>
             <div class="modal-body">
-              <app-formulario-clientes
+              <app-formulario-status
                 (refresh)="refresh()"
-              />
+               />
             </div>
             
           </div>

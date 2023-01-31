@@ -29,7 +29,7 @@
               <th>CNPJ</th> 
               <th>E-mail</th>    
               <th>Telefone 1</th> 
-              <th>Cidade - UF</th>               
+              <th>Cidade - UF</th>              
               <th>Opções</th>
             </tr>
           </thead>
@@ -42,6 +42,7 @@
               <td>{{ row.email }}</td>              
               <td>{{ row.telefone1 | mask: '(00) 0 0000-0000' }}</td> 
               <td>{{ row.cidade?.nome }} - {{ row.cidade?.estado?.uf }}</td>       
+             
               <td>
                 <a
                   class="options"
@@ -98,7 +99,7 @@
           <div class="modal-body">
             <app-formulario-escritorios
               (refresh)="refresh()"
-            ></app-formulario-escritorios>
+             />
           </div>
           
         </div>

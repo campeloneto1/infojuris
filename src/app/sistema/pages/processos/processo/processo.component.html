@@ -1,0 +1,218 @@
+<div
+  class="content-wrapper"
+  style="min-height: 1604.44px"
+  *ngIf="processo$ | async as processo"
+>
+  <app-titulo title="Processo" />
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <!--INICIO CARD INFORMACOES-->
+          <div class="card">
+            <div class="card-body box-profile">
+              <h3 class="profile-username text-center">
+                {{ processo.codigo | mask : "0000000-00.0000.0.00.0000" }}
+              </h3>
+              <p class="text-muted text-center">{{ processo.status.nome }}</p>
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Escritório</b>
+                  <a class="float-right">{{ processo.escritorio?.nome }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Natureza</b>
+                  <a class="float-right">{{ processo.natureza.nome }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Vara</b>
+                  <a class="float-right">{{ processo.vara.nome }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Comarca</b>
+                  <a class="float-right">{{ processo.vara.comarca.nome }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Tribunal</b>
+                  <a class="float-right">{{
+                    processo.vara.comarca.tribunal.nome
+                  }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Valor</b>
+                  <a class="float-right"
+                    >R$ {{ processo.valor | mask : "separator.2" }}</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!--FIM CARD INFORMACOES-->
+        </div>
+
+        <div class="col-md-9">
+          <!--INICIO ROW AUTORES E REUS-->
+          <div class="row">
+            <!-- INICIO CARD AUTORES-->
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-header border-0">
+                  <h3 class="card-title"><strong>Autores</strong></h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover table-valign-middle">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Cpf</th>
+                        <th>Data Nascimento</th>
+                        <th>Telefone 1</th>
+                        <th>E-mail</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pessoa of filtro(processo.pessoas, 1)">
+                        <td>{{ pessoa.nome }}</td>
+                        <td>{{ pessoa.cpf | mask : "000.000.000-00" }}</td>
+                        <td>
+                          {{ pessoa.data_nascimento | date : "dd/MM/yyyy" }}
+                        </td>
+                        <td>
+                          {{ pessoa.telefone1 | mask : "(00) 0 0000-0000" }}
+                        </td>
+                        <td>{{ pessoa.email }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- FIM CAR AUTORES -->
+
+            <!-- INICIO CARD REUS-->
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-header border-0">
+                  <h3 class="card-title"><strong>Réus</strong></h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover table-valign-middle">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Cpf</th>
+                        <th>Data Nascimento</th>
+                        <th>Telefone 1</th>
+                        <th>E-mail</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pessoa of filtro(processo.pessoas, 2)">
+                        <td>{{ pessoa.nome }}</td>
+                        <td>{{ pessoa.cpf | mask : "000.000.000-00" }}</td>
+                        <td>
+                          {{ pessoa.data_nascimento | date : "dd/MM/yyyy" }}
+                        </td>
+                        <td>
+                          {{ pessoa.telefone1 | mask : "(00) 0 0000-0000" }}
+                        </td>
+                        <td>{{ pessoa.email }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- FIM CAR REUS -->
+          </div>
+          <!--FIM ROW AUTORES E REUS-->
+          <!--INICIO ROW AUDIENCIAS-->
+          <div class="row">
+            <!--INICIO CARD AUDIENCIAS-->
+
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header border-0">
+                  <h3 class="card-title"><strong>Audiências</strong></h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover table-valign-middle">
+                    <thead>
+                      <tr>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Tipo</th>
+                       
+                      </tr>
+                    </thead>
+                      <tbody  *ngFor="let audiencia of processo.audiencias">
+                        <tr  data-widget="expandable-table" aria-expanded="false">
+                          <td>{{ audiencia.data | date : "dd/MM/yyyy" }}</td>
+                          <td>{{ audiencia.hora }}</td>
+                          <td>
+                            <span *ngIf="audiencia.tipo_id == 1">Presencial</span>
+                            <span *ngIf="audiencia.tipo_id == 2"
+                              ><a target="_blank" [href]="audiencia.link"
+                                >On-Line
+                                <i class="fa fa-link" aria-hidden="true"></i></a
+                            ></span>
+                          </td>
+                          
+                        </tr>
+                        <tr class="expandable-body d-none">
+                          <td colspan="3">
+                            <div>
+                              <p *ngIf="audiencia.pessoas.length > 0"><strong>Testemunhas:</strong></p>
+                              <table style="width: 100%; margin-bottom: 2em;" *ngIf="audiencia.pessoas.length > 0">
+                                <thead>
+                                  <th>Nome</th>
+                                  <th>CPF</th>
+                                  <th>Data Nascimento</th>
+                                  <th>Telefone 1</th>
+                                  <th>E-mail</th>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let pessoa of audiencia.pessoas">
+                                    <td>{{pessoa.nome}} </td>
+                                    <td>{{pessoa.cpf | mask : "000.000.000-00" }}</td>
+                                    <td>{{pessoa.data_nascimento | date : "dd/MM/yyyy" }}</td>
+                                    <td>{{ pessoa.telefone1 | mask : "(00) 0 0000-0000" }}</td>
+                                    <td>{{pessoa.email }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                             
+                              <p *ngIf="audiencia.obs"><strong>Observações:</strong></p>
+                              <p *ngIf="audiencia.obs">{{audiencia.obs}}</p>
+                            </div>
+                          </td>
+                        </tr>   
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- FIM CARD AUDIENCIAS-->
+
+            <!--INICIO CARD OBSERVAçÕES PROCESSO-->
+
+            <div class="col-sm-12" *ngIf="processo.obs">
+              <div class="card">
+                <div class="card-header border-0">
+                  <h3 class="card-title"><strong>Observações do processo</strong></h3>
+                </div>
+                <div class="card-body table-responsive text-justify">
+                  {{processo.obs}}
+                </div>
+              </div>
+             
+            </div>
+            <!--FIm CARD OBSERVAçÕES PROCESSO-->
+          </div>
+          <!--FIM ROW AUDIENCIAS-->
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

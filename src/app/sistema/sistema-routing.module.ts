@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CidadesComponent } from './pages/cidades/cidades.component';
-import { ClientesComponent } from './pages/clientes/clientes.component';
+import { PessoasComponent } from './pages/pessoas/pessoas.component';
 import { ComarcasComponent } from './pages/comarcas/comarcas.component';
 import { EscritoriosComponent } from './pages/escritorios/escritorios.component';
 import { EstadosComponent } from './pages/estados/estados.component';
@@ -15,6 +15,11 @@ import { TribunaisComponent } from './pages/tribunais/tribunais.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { VarasComponent } from './pages/varas/varas.component';
 import { SistemaComponent } from './sistema.component';
+import { StatusComponent } from './pages/status/status.component';
+import { SexosComponent } from './pages/sexos/sexos.component';
+import { EstadosCivisComponent } from './pages/estados-civis/estados-civis.component';
+import { AudienciasComponent } from './pages/audiencias/audiencias.component';
+import { ProcessoComponent } from './pages/processos/processo/processo.component';
 
 const routes: Routes = [
   {
@@ -26,15 +31,17 @@ const routes: Routes = [
         component: InicioComponent,
       },
       {
+        path: 'Audiencias',
+        //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
+        component: AudienciasComponent,
+      },
+     
+      {
         path: 'Cidades',
         //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
         component: CidadesComponent,
       },
-      {
-        path: 'Clientes',
-        //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
-        component: ClientesComponent,
-      },
+     
       {
         path: 'Comarcas',
         //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
@@ -49,6 +56,11 @@ const routes: Routes = [
         path: 'Estados',
         //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
         component: EstadosComponent,
+      },
+      {
+        path: 'Estados-Civis',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        component: EstadosCivisComponent,
       },
       {
         path: 'Filiais',
@@ -71,9 +83,29 @@ const routes: Routes = [
         component: PaisesComponent,
       },
       {
+        path: 'Pessoas',
+        //loadChildren: () => import('./pages/escritorios/escritorios.module').then((m) => m.EscritoriosModule),
+        component: PessoasComponent,
+      },
+      {
+        path: 'Processo/:id',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        component: ProcessoComponent,
+      },
+      {
         path: 'Processos',
         //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
         component: ProcessosComponent,
+      },
+      {
+        path: 'Status',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        component: StatusComponent,
+      },
+      {
+        path: 'Sexos',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        component: SexosComponent,
       },
       {
         path: 'Tribunais',
