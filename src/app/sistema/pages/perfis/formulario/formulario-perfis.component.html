@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
+    <div class="row">
+       <app-input-text class="col-sm-4" [label]="'Nome'" [id]="'nome'" [tipo]="'text'"  formControlName="nome" />    
+       
+       <app-input-text class="col-sm-2" [label]="'Administrador'" [id]="'administrador'" [tipo]="'checkbox'" formControlName="administrador" />    
+       <app-input-text class="col-sm-2" [label]="'Gestor'" [id]="'gestor'" [tipo]="'checkbox'"  formControlName="gestor" />    
+    </div>
+  
+    <hr />
+  
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button
+          type="button"
+          class="btn btn-link text-danger"
+          data-bs-dismiss="modal"
+        >
+          Fechar
+        </button>
+        <!--[disabled]="form.invalid"-->
+        <button [disabled]="form.invalid"  data-bs-dismiss="modal" type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </form>
+  

@@ -1,10 +1,26 @@
 <div class="form-group">
+  
+  <input
+    style="margin-right: 0.5em;"
+    *ngIf="tipo == 'checkbox'"
+    [(ngModel)]="inputvalor"
+    (ngModelChange)="change()"
+    [ngClass]="{
+      'is-invalid': control.invalid && (control.dirty || control.touched)
+    }"       
+    checked="{{inputvalor}}"
+    value="{{inputvalor}}"
+    type="{{tipo}}"    
+    id="{{ id }}"
+  />
+
   <label for="{{ id }}">
     {{ label }}
     <span *ngIf="control?.errors?.['required']" class="text-danger">*</span>
   </label>
+
   <input
-    *ngIf="!mascara && tipo != 'textarea'"
+    *ngIf="!mascara && tipo != 'textarea' && tipo != 'checkbox'"
     [(ngModel)]="inputvalor"
     (ngModelChange)="change()"
     [ngClass]="{
@@ -69,4 +85,7 @@
       {{control.errors?.['max'].max}} 
     </span>
   </div>
+
+
+ 
 </div>

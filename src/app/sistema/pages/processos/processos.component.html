@@ -48,7 +48,7 @@
                 <td>
                   <a 
                     (click)="setProcesso(row)" 
-                    class="btn btn-link"
+                    class="point"
                     data-bs-toggle="modal"
                     data-bs-target="#modalautores"
                   >
@@ -58,7 +58,7 @@
                 <td>
                   <a 
                   (click)="setProcesso(row)" 
-                  class="btn btn-link"
+                  class="point"
                   data-bs-toggle="modal"
                   data-bs-target="#modalreus">
                     <i class="fa fa-align-justify" aria-hidden="true"></i> Réus ({{filtro(row.pessoas, 2).length}})
@@ -174,7 +174,7 @@
             <div class="modal-header">
               <h4 class="modal-title">Autores</h4>
               <button
-               
+                style="margin-left: 0.5em;"
                 class="btn btn-outline-primary"
                 (click)="cadautor = true;"
               >
@@ -258,7 +258,7 @@
             <div class="modal-header">
               <h4 class="modal-title">Réus</h4>
               <button
-               
+              style="margin-left: 0.5em;"
                 class="btn btn-outline-primary"
                 (click)="cadreu = true;"
               >

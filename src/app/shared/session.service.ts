@@ -10,6 +10,27 @@ export class SessionService {
     private token!: string;
     private user!: Usuario;
 
+    pathadministrador = [
+      'Cidades',
+      'Comarcas',
+      'Escritorios',
+      'Estados',
+      'Estados-Civis',
+      'Naturezas',
+      'Ocupacoes',
+      'Paises',
+      'Perfis',      
+      'Status',
+      'Sexos',
+      'Tribunais',
+      'Varas',
+    ];
+    
+    pathgestor = [
+      'Filiais',
+      'Usuarios',
+    ]   
+
     constructor(private router: Router){
         try {
             //console.log(sessionStorage.getItem('usuario'));
@@ -73,6 +94,21 @@ export class SessionService {
 
     retornaUser(){
       return this.user;
+    }
+
+    retornaPerfil(){
+      return this.user.perfil;
+    }
+
+    hasPermission(data: any):boolean{
+      //console.log(data.routeConfig.path)
+      if(this.pathadministrador.includes(data.routeConfig.path) && !this.user.perfil?.administrador){
+        return false;
+      }
+      if(this.pathgestor.includes(data.routeConfig.path) && !this.user.perfil?.gestor){
+        return false;
+      }
+      return true;
     }
 
     logout(){

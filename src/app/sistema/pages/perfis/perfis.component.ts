@@ -2,31 +2,31 @@ import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
 import { SharedService } from "src/app/shared/shared.service";
-import { FormularioPaisesComponent } from "./formulario/formulario-paises.component";
-import { Pais, Paises } from "./paises";
-import { PaisesService } from "./paises.service";
+import { FormularioPerfisComponent } from "./formulario/formulario-perfis.component";
+import { Perfil, Perfis } from "./perfis";
+import { PerfisService } from "./perfis.service";
 
 @Component({
-    selector: 'app-paises',
-    templateUrl: './paises.component.html',
-    styleUrls: ['./paises.component.css']
+    selector: 'app-perfis',
+    templateUrl: './perfis.component.html',
+    styleUrls: ['./perfis.component.css']
 })
 
-export class PaisesComponent{
-    data$!: Observable<Paises>;
-    excluir!: Pais;
+export class PerfisComponent{
+    data$!: Observable<Perfis>;
+    excluir!: Perfil;
 
-    @ViewChild(FormularioPaisesComponent) child! : FormularioPaisesComponent;
+    @ViewChild(FormularioPerfisComponent) child! : FormularioPerfisComponent;
     @ViewChild(DataTableDirective, {static: false})  dtElement!: DataTableDirective;
 
     dtOptions: DataTables.Settings = {};
 
     // We use this trigger because fetching the list of persons can be quite long,
   // thus we ensure the data is fetched before rendering
-  dtTrigger: Subject<any> = new Subject<Paises>();
+  dtTrigger: Subject<any> = new Subject<Perfis>();
 
   constructor( private sharedService: SharedService,
-    private paisesService: PaisesService) {}
+    private perfisService: PerfisService) {}
 
     ngOnInit(): void {
         this.dtOptions = {
@@ -37,7 +37,7 @@ export class PaisesComponent{
             order: [1, 'asc'],
           };
 
-          this.data$ = this.paisesService.index().pipe(tap(() => {
+          this.data$ = this.perfisService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);
           }));
     }
@@ -48,7 +48,7 @@ export class PaisesComponent{
       }
     
       refresh(){
-        this.data$ = this.paisesService.index().pipe(tap(() => {
+        this.data$ = this.perfisService.index().pipe(tap(() => {
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             // Destroy the table first
             dtInstance.destroy();
@@ -65,20 +65,20 @@ export class PaisesComponent{
         this.child.resetar();
       }
     
-      edit(data: Pais){
+      edit(data: Perfil){
         //console.log(data);
         this.child.setForm(data);
       }
     
-      delete(data: Pais){
+      delete(data: Perfil){
         this.excluir = data;
       }
     
       confirm(id?: number){
-        this.paisesService.destroy(id || 0).subscribe({
+        this.perfisService.destroy(id || 0).subscribe({
           next: (data) => {
             this.sharedService.toast('Sucesso!', data as string , 3);
-            this.excluir = {} as Pais;
+            this.excluir = {} as Perfil;
             this.refresh();
           },
           error: (error) => {

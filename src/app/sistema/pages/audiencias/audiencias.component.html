@@ -52,14 +52,14 @@
                     <span *ngIf="row.tipo_id == 2"><a target="_blank" [href]="row.link">On-Line <i class="fa fa-link" aria-hidden="true"></i></a></span>
                 </td>
                 <td>
-                  <a 
-                    (click)="setAudiencia(row)" 
-                    class="btn btn-link"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modaltestemunhas"
-                  >
-                    <i class="fa fa-align-justify" aria-hidden="true"></i> Testemunhas 
-                </a>
+                    <a 
+                      (click)="setAudiencia(row)" 
+                      class="point"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modaltestemunhas"
+                    >
+                      <i class="fa fa-align-justify" aria-hidden="true"></i> Testemunhas 
+                  </a>
                 </td>
                 
                 
@@ -137,9 +137,9 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Tertemunhas</h4>
+              <h4 class="modal-title">Testemunhas</h4>
               <button
-               
+              style="margin-left: 0.5em;"
                 class="btn btn-outline-primary"
                 (click)="cadtest = true;"
               >

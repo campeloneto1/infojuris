@@ -27,6 +27,8 @@ import { SexosModule } from './pages/sexos/sexos.module';
 import { StatusModule } from './pages/status/status.module';
 import { AudienciasModule } from './pages/audiencias/audiencias.module';
 import { AgendaModule } from './pages/agenda/agenda.module';
+import { LancamentosModule } from './pages/lancamentos/lancamentos.module';
+import { PerfisModule } from './pages/perfis/perfis.module';
 
 
 @NgModule({
@@ -46,9 +48,11 @@ import { AgendaModule } from './pages/agenda/agenda.module';
     EstadosModule,
     EstadosCivisModule,
     FiliaisModule,
+    LancamentosModule,
     NaturezasModule,
     PaisesModule,
     PessoasModule,
+    PerfisModule,
     ProcessosModule,
     SexosModule,
     StatusModule,

@@ -19,17 +19,16 @@ import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR
 })
 
 export class InputTextComponent implements ControlValueAccessor{
-
-    inputvalor = '';
-    control!: AbstractControl;
-
   
   @Input() id!: string;
   @Input() label!: string;
   @Input() tipo!: string;
   @Input() mascara!: string;
 
-  onChange = (inputvalor:string) => {};
+  inputvalor!: any;
+  control!: AbstractControl;
+
+  onChange = (inputvalor:any) => {};
 
   onTouched = () => {};
 
@@ -39,12 +38,13 @@ export class InputTextComponent implements ControlValueAccessor{
 
   change() {
     this.markAsTouched();
-    if (!this.disabled) {      
+    if (!this.disabled) {     
+      console.log(this.inputvalor)
       this.onChange(this.inputvalor);
     }
   }
 
-  writeValue(inputvalor: string) {
+  writeValue(inputvalor: any) {
     this.inputvalor = inputvalor;
   }
 

@@ -23,7 +23,7 @@ export class CidadesComponent{
 
     // We use this trigger because fetching the list of persons can be quite long,
   // thus we ensure the data is fetched before rendering
-  dtTrigger: Subject<any> = new Subject<Cidades>();
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor( private sharedService: SharedService,
     private cidadesService: CidadesService) {}
@@ -31,15 +31,16 @@ export class CidadesComponent{
     ngOnInit(): void {
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 2,
+            pageLength: 10,
             processing: true,
             responsive: true,
-            order: [3, 'asc'],
+            order: [[2, 'asc'],[3, 'asc']],
           };
 
           this.data$ = this.cidadesService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.data$);
+            this.dtTrigger.next(this.dtOptions);
           }));
+          
     }
 
     ngOnDestroy(): void {
@@ -53,11 +54,11 @@ export class CidadesComponent{
             // Destroy the table first
             dtInstance.destroy();
             // Call the dtTrigger to rerender again
-            this.dtTrigger.next(this.data$);
+            this.dtTrigger.next(this.dtOptions);
           });
-        }));;
+        }));
         
-        
+       
         
       }
 

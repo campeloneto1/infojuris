@@ -51,15 +51,15 @@ export class ProcessosComponent {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2,
+      pageLength: 10,
       processing: true,
       responsive: true,
-      order: [3, 'asc'],
+      order: [1, 'desc'],
     };
 
     this.data$ = this.processosService.index().pipe(
       tap(() => {
-        this.dtTrigger.next(this.data$);
+        this.dtTrigger.next(this.dtOptions);
       })
     );
 
@@ -78,7 +78,7 @@ export class ProcessosComponent {
           // Destroy the table first
           dtInstance.destroy();
           // Call the dtTrigger to rerender again
-          this.dtTrigger.next(this.data$);
+          this.dtTrigger.next(this.dtOptions);
         });
       })
     );

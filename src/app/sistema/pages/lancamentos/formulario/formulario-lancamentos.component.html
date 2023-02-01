@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="cadastrar()" class="needs-validation">
+
+
+    <div class="row">  
+        
+        <app-input-select
+      
+        class="col-sm-2"
+        [label]="'Escritório'"
+        [id]="'escritorio_id'"
+        [data$]="escritorios$"
+        formControlName="escritorio_id"
+      />
+
+       <app-input-text
+       class="col-sm-2"
+       [label]="'Data Vencimento'"
+       [id]="'data_vencimento'"
+       [tipo]="'date'"
+       formControlName="data_vencimento" />
+
+       <!--<app-input-text
+       class="col-sm-2"
+       [label]="'Valor'"
+       [id]="'valor'"
+       [tipo]="'text'"
+       [mascara]="'separator.2'"
+       formControlName="valor"
+      />-->
+
+      <app-input-text
+       class="col-sm-2"
+       [label]="'Desconto'"
+       [id]="'desconto'"
+       [tipo]="'number'"
+       formControlName="desconto"
+      />
+
+      <app-input-text
+       class="col-sm-2"
+       [label]="'Porcentagem'"
+       [id]="'porcentagem'"
+       [tipo]="'number'"
+       formControlName="porcentagem"
+      />
+
+    </div>
+
+    <div class="row">  
+        
+    </div>
+
+    <hr />
+  
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button
+          type="button"
+          class="btn btn-link text-danger"
+          data-bs-dismiss="modal"
+        >
+          Fechar
+        </button>
+        <!--[disabled]="form.invalid"-->
+        <button
+          [disabled]="form.invalid"
+          data-bs-dismiss="modal"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Salvar
+        </button>
+      </div>
+    </div>
+  </form>
+  

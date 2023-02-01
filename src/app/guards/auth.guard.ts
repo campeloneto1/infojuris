@@ -17,8 +17,28 @@ import { SessionService } from '../shared/session.service';
 })
 export class AuthGuard implements CanMatch {
   constructor(private sessionService: SessionService,
-    private router: Router){}
+    private router: Router){
+     }
 
+    administrador = [
+      '/Cidades',
+      '/Comarcas',
+      '/Escritorios',
+      '/Estados',
+      '/Estados-Civis',
+      '/Naturezas',
+      '/Ocupacoes',
+      '/Paises',
+      '/Perfis',      
+      '/Status',
+      '/Sexos',
+      '/Tribunais',
+      '/Varas',
+    ]
+
+    perfil = this.sessionService.retornaPerfil();
+
+    
     canMatch(
       route: Route,
       segments: UrlSegment[]
@@ -26,13 +46,17 @@ export class AuthGuard implements CanMatch {
       | Observable<boolean | UrlTree>
       | Promise<boolean | UrlTree>
       | boolean
-      | UrlTree {
+      | UrlTree 
+    {
+
       if (!this.sessionService.check()) {
         this.router.navigate(['auth']);
         return false;
       }
-  
+      
       return true;
     }
+
+    
   
 }

@@ -31,14 +31,14 @@ export class VarasComponent{
     ngOnInit(): void {
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 2,
+            pageLength: 10,
             processing: true,
             responsive: true,
-            order: [3, 'asc'],
+            order: [[1, 'asc'],[2, 'asc'],[3, 'asc']],
           };
 
           this.data$ = this.varasService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.data$);
+            this.dtTrigger.next(this.dtOptions);
           }));
     }
 
@@ -53,7 +53,7 @@ export class VarasComponent{
             // Destroy the table first
             dtInstance.destroy();
             // Call the dtTrigger to rerender again
-            this.dtTrigger.next(this.data$);
+            this.dtTrigger.next(this.dtOptions);
           });
         }));;
         
