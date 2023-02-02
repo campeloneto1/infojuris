@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
 import { EstadoCivil } from "../estados-civis";
 import { EstadosCivisService } from "../estados-civis.service";
@@ -7,7 +9,9 @@ import { EstadosCivisService } from "../estados-civis.service";
 @Component({
     selector: 'app-formulario-estados-civis',
     templateUrl: './formulario-estados-civis.component.html',
-    styleUrls: ['./formulario-estados-civis.component.css']
+    styleUrls: ['./formulario-estados-civis.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule], 
 })
 
 export class FormularioEstadosCivisComponent{

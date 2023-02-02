@@ -6,7 +6,7 @@ import { FormularioNaturezasComponent } from './formulario/formulario-naturezas.
 import { NaturezasComponent } from './naturezas.component';
 
 @NgModule({
-  declarations: [NaturezasComponent, FormularioNaturezasComponent],
+  declarations: [],
   imports: [CommonModule, SharedModule, TituloModule],
   exports: [],
 })

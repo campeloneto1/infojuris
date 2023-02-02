@@ -6,6 +6,7 @@
         <div class="card-header">
           <h3 class="card-title">
             <button
+              *ngIf="perfil.audiencias_cad"
               data-bs-toggle="modal"
               data-bs-target="#modalcad"
               class="btn btn-outline-primary"
@@ -15,7 +16,7 @@
             </button>
           </h3>
         </div>
-        <div class="card-body p-2">
+        <div class="card-body table-responsive p-2">
           <table
             datatable
             [dtOptions]="dtOptions"
@@ -58,7 +59,7 @@
                       data-bs-toggle="modal"
                       data-bs-target="#modaltestemunhas"
                     >
-                      <i class="fa fa-align-justify" aria-hidden="true"></i> Testemunhas 
+                      <i class="fa fa-align-justify" aria-hidden="true"></i> Testemunhas ({{row.pessoas.length}})
                   </a>
                 </td>
                 
@@ -72,6 +73,7 @@
                 </td>-->
                 <td>
                   <a
+                  *ngIf="perfil.audiencias_edt"
                     class="options"
                     (click)="edit(row)"
                     data-bs-toggle="modal"
@@ -83,6 +85,7 @@
                     ></i>
                   </a>
                   <a
+                  *ngIf="perfil.audiencias_del"
                     class="options"
                     (click)="delete(row)"
                     data-bs-toggle="modal"

@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioVarasComponent } from "./formulario/formulario-varas.component";
 import { Vara, Varas } from "./varas";
 import { VarasService } from "./varas.service";
@@ -9,7 +12,9 @@ import { VarasService } from "./varas.service";
 @Component({
     selector: 'app-varas',
     templateUrl: './varas.component.html',
-    styleUrls: ['./varas.component.html']
+    styleUrls: ['./varas.component.html'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioVarasComponent], 
 })
 
 export class VarasComponent{
@@ -29,14 +34,9 @@ export class VarasComponent{
     private varasService: VarasService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [[1, 'asc'],[2, 'asc'],[3, 'asc']],
-          };
-
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [[1, 'asc'],[2, 'asc'],[3, 'asc']]}
+       
           this.data$ = this.varasService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);
           }));

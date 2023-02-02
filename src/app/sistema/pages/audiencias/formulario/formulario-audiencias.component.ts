@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedService } from 'src/app/shared/shared.service';
-import { Processos } from '../../processos/processos';
+import { Processo, Processos } from '../../processos/processos';
 import { ProcessosService } from '../../processos/processos.service';
 import { Audiencia } from '../audiencias';
 import { AudienciasService } from '../audiencias.service';
@@ -11,6 +13,8 @@ import { AudienciasService } from '../audiencias.service';
   selector: 'app-formulario-audiencias',
   templateUrl: './formulario-audiencias.component.html',
   styleUrls: ['./formulario-audiencias.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule]
 })
 export class FormularioAudienciasComponent implements OnInit{
   @Output('refresh') refresh: EventEmitter<Audiencia> = new EventEmitter();
@@ -23,6 +27,9 @@ export class FormularioAudienciasComponent implements OnInit{
     { id: 2, nome: 'On-Line' },
   ]);
 
+  protected config!: any
+  protected config2!: any
+
   constructor(
     private processosService: ProcessosService,
     private audienciasService: AudienciasService,
@@ -33,8 +40,10 @@ export class FormularioAudienciasComponent implements OnInit{
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      processo_id: ['', [Validators.required]],
-      tipo_id: ['', [Validators.required]],
+      processo_id: [''],
+      processo: ['', [Validators.required]],
+      tipo_id: [''],
+      tipo: ['', [Validators.required]],
       link: [
         '',
         Validators.compose([
@@ -48,10 +57,17 @@ export class FormularioAudienciasComponent implements OnInit{
     });
 
     this.processos$ = this.processosService.index();
+
+    this.config = this.sharedService.getConfig();
+    this.config = {...this.config, displayFn:(item: Processo) => { return item.codigo; }, placeholder:'Processo'};
+
+    this.config2 = this.sharedService.getConfig();
+    this.config2= {...this.config, displayFn:(item: any) => { return item.nome; }, placeholder:'Tipo'};
   }
 
   setForm(data: Audiencia) {
     this.form.patchValue(data);
+    
   }
 
   resetar() {
@@ -59,7 +75,17 @@ export class FormularioAudienciasComponent implements OnInit{
   }
 
   cadastrar() {
-    //console.log(this.form.value);
+    //console.log(this.form.value)
+
+    if(this.form.value.processo.id){
+      this.form.get('processo_id')?.patchValue(this.form.value.processo.id);
+    this.form.get('processo')?.patchValue('');
+    }
+    if(this.form.value.tipo.id){
+      this.form.get('tipo_id')?.patchValue(this.form.value.tipo.id);
+      this.form.get('tipo')?.patchValue('');
+    }
+
     if (this.form.value.id) {
       this.audienciasService.update(this.form.value as Audiencia).subscribe({
         next: (data) => {

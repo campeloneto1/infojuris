@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Perfil } from '../sistema/pages/perfis/perfis';
 import { Usuario } from '../sistema/pages/usuarios/usuarios';
 import { Session } from './session';
 
@@ -28,6 +29,7 @@ export class SessionService {
     
     pathgestor = [
       'Filiais',
+      'Lancamentos',
       'Usuarios',
     ]   
 
@@ -92,11 +94,11 @@ export class SessionService {
         return this.token;
     }
 
-    retornaUser(){
+    retornaUser():Usuario{
       return this.user;
     }
 
-    retornaPerfil(){
+    retornaPerfil():Perfil{
       return this.user.perfil;
     }
 

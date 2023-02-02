@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
 import { Pais } from "../paises";
 import { PaisesService } from "../paises.service";
@@ -7,7 +9,9 @@ import { PaisesService } from "../paises.service";
 @Component({
     selector: 'app-formulario-paises',
     templateUrl: './formulario-paises.component.html',
-    styleUrls: ['./formulario-paises.component.css']
+    styleUrls: ['./formulario-paises.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule], 
 })
 
 export class FormularioPaisesComponent{

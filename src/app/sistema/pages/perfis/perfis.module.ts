@@ -6,7 +6,7 @@ import { FormularioPerfisComponent } from "./formulario/formulario-perfis.compon
 import { PerfisComponent } from "./perfis.component";
 
 @NgModule({
-    declarations: [PerfisComponent, FormularioPerfisComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

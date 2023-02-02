@@ -5,11 +5,18 @@ import { UsuariosService } from './usuarios.service';
 import { FomularioUsuariosComponent } from './formulario/formulario-usuarios.component';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DataTableDirective } from 'angular-datatables';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { TituloModule } from '../../components/titulo/titulo.module';
+import { SessionService } from 'src/app/shared/session.service';
+import { Perfil } from '../perfis/perfis';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule, TituloModule, FomularioUsuariosComponent], 
   
 })
 export class UsuariosComponent implements OnInit, OnDestroy {
@@ -25,20 +32,18 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<Usuarios>();
 
+  perfil!: Perfil;
+
   constructor( private sharedService: SharedService,
+    private sessionService: SessionService,
     private usuariosService: UsuariosService) {}
 
   ngOnInit(): void {
     
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 2,
-      processing: true,
-      responsive: true,
-      order: [2, 'asc'],
-    };
+    this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [2, 'asc']}
 
-    
+    this.perfil = this.sessionService.retornaPerfil();
 
     this.data$ = this.usuariosService.index().pipe(tap(() => {
       this.dtTrigger.next(this.dtOptions);

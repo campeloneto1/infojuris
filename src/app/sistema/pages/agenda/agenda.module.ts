@@ -5,7 +5,7 @@ import { TituloModule } from "../../components/titulo/titulo.module";
 import { AgendaComponent } from "./agenda.component";
 
 @NgModule({
-    declarations: [AgendaComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

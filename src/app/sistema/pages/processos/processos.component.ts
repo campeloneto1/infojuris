@@ -1,11 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Observable, Subject, tap } from 'rxjs';
+import { SessionService } from 'src/app/shared/session.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedService } from 'src/app/shared/shared.service';
+import { TituloModule } from '../../components/titulo/titulo.module';
+import { Perfil } from '../perfis/perfis';
 import { Pessoa, Pessoas } from '../pessoas/pessoas';
 import { Status, Statuss } from '../status/status';
 import { StatusService } from '../status/status.service';
 import { FormularioProcessosStatusComponent } from './fomulario-processos-status/formulario-processos-status.component';
+import { FormularioProcessosPessoasComponent } from './formulario-processos-pessoas/formulario-processos-pessoas.component';
 import { FormularioProcessosComponent } from './formulario/formulario-processos.component';
 import { Processo, Processos } from './processos';
 import { ProcessosPessoasService } from './processos-pessoas.service';
@@ -15,6 +21,8 @@ import { ProcessosService } from './processos.service';
   selector: 'app-processos',
   templateUrl: './processos.component.html',
   styleUrls: ['./processos.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule, TituloModule, FormularioProcessosComponent, FormularioProcessosStatusComponent, FormularioProcessosPessoasComponent], 
 })
 export class ProcessosComponent {
   data$!: Observable<Processos>;
@@ -29,6 +37,7 @@ export class ProcessosComponent {
   cadreu = false;
   delreu = false;
   
+  perfil!: Perfil;
 
   @ViewChild(FormularioProcessosComponent) child!: FormularioProcessosComponent;
   
@@ -43,19 +52,17 @@ export class ProcessosComponent {
 
   constructor(
     private sharedService: SharedService,
+    private sessionService: SessionService,
     private statusService: StatusService,
     private processosService: ProcessosService,
     private processosPessoasService: ProcessosPessoasService
   ) {}
 
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      processing: true,
-      responsive: true,
-      order: [1, 'desc'],
-    };
+    this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'desc']}
+
+    this.perfil = this.sessionService.retornaPerfil();
 
     this.data$ = this.processosService.index().pipe(
       tap(() => {

@@ -1,8 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
-import { Pessoas } from "../../pessoas/pessoas";
+import { Pessoa, Pessoas } from "../../pessoas/pessoas";
 import { PessoasService } from "../../pessoas/pessoas.service";
 import { ProcessoPessoa } from "../processos-pessoas";
 import { ProcessosPessoasService } from "../processos-pessoas.service";
@@ -10,7 +12,9 @@ import { ProcessosPessoasService } from "../processos-pessoas.service";
 @Component({
     selector: 'app-formulario-processos-pessoas',
     templateUrl: './formulario-processos-pessoas.component.html',
-    styleUrls: ['./formulario-processos-pessoas.component.css']
+    styleUrls: ['./formulario-processos-pessoas.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule], 
 })
 export class FormularioProcessosPessoasComponent{
     @Output('refresh2') refresh2: EventEmitter<ProcessoPessoa> = new EventEmitter();
@@ -19,6 +23,8 @@ export class FormularioProcessosPessoasComponent{
 
   protected form!: FormGroup;
   protected pessoas$!: Observable<Pessoas>;
+
+  protected config!: any
 
   constructor(
     private processosPessoasService: ProcessosPessoasService,
@@ -31,11 +37,15 @@ export class FormularioProcessosPessoasComponent{
     this.form = this.formBuilder.group({
       id: [''],
       processo_id: [''],
-      pessoa_id: ['', [Validators.required]],     
+      pessoa_id: [''],     
+      pessoa: ['', [Validators.required]],     
       tipo_id: [''],
     });
 
     this.pessoas$ = this.pessoasService.index();
+
+    this.config = this.sharedService.getConfig();
+    this.config = {...this.config, displayFn:(item: Pessoa) => { return item.nome+' ('+item.cpf+')'; }, placeholder:'Pessoa'};
   }
 
   setForm(data: ProcessoPessoa) {
@@ -47,6 +57,12 @@ export class FormularioProcessosPessoasComponent{
   }
 
   cadastrar() {
+
+    if(this.form.value.pessoa){
+      this.form.get('pessoa_id')?.patchValue(this.form.value.pessoa.id);
+      this.form.get('pessoa')?.patchValue('');
+    }
+   
     if(!this.form.value.processo_id){
         this.form.get('processo_id')?.patchValue(this.processo_id);
     }

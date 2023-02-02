@@ -6,6 +6,7 @@
         <div class="card-header">
           <h3 class="card-title">
             <button
+            *ngIf="perfil.lancamentos_cad"
               data-bs-toggle="modal"
               data-bs-target="#modalcad"
               class="btn btn-outline-primary"
@@ -15,7 +16,7 @@
             </button>
           </h3>
         </div>
-        <div class="card-body p-2">
+        <div class="card-body table-responsive p-2">
           <table
             datatable
             [dtOptions]="dtOptions"
@@ -57,6 +58,7 @@
                 <td>
                   
                   <a
+                  *ngIf="perfil.lancamentos_edt"
                     class="options ml-2"
                     (click)="edit(row)"
                     data-bs-toggle="modal"
@@ -68,6 +70,7 @@
                     ></i>
                   </a>
                   <a
+                  *ngIf="perfil.lancamentos_del"
                     class="options  ml-2"
                     (click)="delete(row)"
                     data-bs-toggle="modal"

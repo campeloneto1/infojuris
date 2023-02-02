@@ -3,9 +3,10 @@
     <app-input-select
       class="col-sm-2"
       [label]="'País'"
-      [id]="'pais_id'"
+      [id]="'pais'"
       [data$]="paises$"
-      formControlName="pais_id"
+      formControlName="pais"
+      [config]="config"
     ></app-input-select>
 
     <app-input-text

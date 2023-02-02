@@ -6,7 +6,7 @@ import { FormularioTribunaisComponent } from "./formulario/formulario-tribunais.
 import { TribunaisComponent } from "./tribunais.component";
 
 @NgModule({
-    declarations: [TribunaisComponent, FormularioTribunaisComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

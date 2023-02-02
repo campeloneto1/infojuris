@@ -10,11 +10,7 @@ import { ProcessosComponent } from './processos.component';
 
 @NgModule({
   declarations: [
-    ProcessosComponent,
-    FormularioProcessosComponent,
-    FormularioProcessosPessoasComponent,
-    FormularioProcessosStatusComponent,
-    ProcessoComponent,
+    
   ],
   imports: [CommonModule, SharedModule, TituloModule],
   exports: [],

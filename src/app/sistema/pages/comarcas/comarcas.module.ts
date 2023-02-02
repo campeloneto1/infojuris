@@ -6,7 +6,7 @@ import { ComarcasComponent } from "./comarcas.component";
 import { FormularioComarcasComponent } from "./formulario/formulario-comarcas.component";
 
 @NgModule({
-    declarations: [ComarcasComponent, FormularioComarcasComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

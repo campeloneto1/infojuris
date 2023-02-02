@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioOcupacoesComponent } from "./formulario/formulario-ocupacoes.component";
 import { Ocupacao, Ocupacoes } from "./ocupacoes";
 import { OcupacoesService } from "./ocupacoes.service";
@@ -9,7 +12,9 @@ import { OcupacoesService } from "./ocupacoes.service";
 @Component({
     selector: 'app-ocupacoes',
     templateUrl: './ocupacoes.component.html',
-    styleUrls: ['./ocupacoes.component.css']
+    styleUrls: ['./ocupacoes.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioOcupacoesComponent],
 })
 
 export class OcupacoesComponent implements OnInit, OnDestroy{
@@ -30,13 +35,8 @@ export class OcupacoesComponent implements OnInit, OnDestroy{
     private ocupacoesService: OcupacoesService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
           this.data$ = this.ocupacoesService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

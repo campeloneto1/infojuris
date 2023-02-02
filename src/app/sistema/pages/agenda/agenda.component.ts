@@ -26,6 +26,9 @@ import { EventColor } from 'calendar-utils';
 import { AudienciasService } from '../audiencias/audiencias.service';
 import { Audiencia, Audiencias } from '../audiencias/audiencias';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { TituloModule } from '../../components/titulo/titulo.module';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -46,6 +49,8 @@ const colors: Record<string, EventColor> = {
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule, TituloModule],    
 })
 export class AgendaComponent implements OnInit{
   view: CalendarView = CalendarView.Month;

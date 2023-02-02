@@ -1,7 +1,12 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SessionService } from "src/app/shared/session.service";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
+import { Perfil } from "../perfis/perfis";
 import { FormularioLancamentosComponent } from "./formulario/formulario-lancamentos.component";
 import { Lancamento, Lancamentos } from "./lancamentos";
 import { LancamentosService } from "./lancamentos.service";
@@ -9,7 +14,9 @@ import { LancamentosService } from "./lancamentos.service";
 @Component({
     selector: 'app-lancamentos',
     templateUrl: './lancamentos.component.html',
-    styleUrls: ['./lancamentos.component.css']
+    styleUrls: ['./lancamentos.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioLancamentosComponent], 
 })
 
 export class LancamentosComponent{
@@ -28,19 +35,19 @@ export class LancamentosComponent{
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<Lancamentos>();
 
+  perfil!: Perfil;
+
   constructor(
     private sharedService: SharedService,
+    private sessionService: SessionService,
     private lancamentosService: LancamentosService
   ) {}
 
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      processing: true,
-      responsive: true,
-      order: [1, 'desc'],
-    };
+    this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'desc']}
+
+    this.perfil = this.sessionService.retornaPerfil();
 
     this.data$ = this.lancamentosService.index().pipe(
       tap(() => {

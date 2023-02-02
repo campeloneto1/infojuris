@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { Cidade, Cidades } from "./cidades";
 import { CidadesService } from "./cidades.service";
 import { FormularioCidadesComponent } from "./formulario/formulario-cidades.component";
@@ -9,7 +12,9 @@ import { FormularioCidadesComponent } from "./formulario/formulario-cidades.comp
 @Component({
     selector: 'app-cidades',
     templateUrl: './cidades.component.html',
-    styleUrls: ['./cidades.component.css']
+    styleUrls: ['./cidades.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioCidadesComponent], 
 })
 
 export class CidadesComponent{
@@ -29,17 +34,12 @@ export class CidadesComponent{
     private cidadesService: CidadesService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [[2, 'asc'],[3, 'asc']],
-          };
-
-          this.data$ = this.cidadesService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.dtOptions);
-          }));
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [[2, 'asc'],[3, 'asc']]}
+        
+      this.data$ = this.cidadesService.index().pipe(tap(() => {
+        this.dtTrigger.next(this.dtOptions);
+      }));
           
     }
 

@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { SessionService } from "src/app/shared/session.service";
+import { Perfil } from "../../pages/perfis/perfis";
 
 @Component({
     selector: 'app-sidebar',
@@ -6,4 +8,11 @@ import { Component } from "@angular/core";
     styleUrls: ['./sidebar.component.css']
 })
 
-export class SidebarComponent{}
+export class SidebarComponent implements OnInit{
+    perfil!: Perfil;
+    constructor(private sessionService: SessionService){}
+
+    ngOnInit(): void {
+        this.perfil = this.sessionService.retornaPerfil();
+    }
+}

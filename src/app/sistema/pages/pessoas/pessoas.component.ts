@@ -5,11 +5,18 @@ import { SharedService } from "src/app/shared/shared.service";
 import { Pessoa, Pessoas } from "./pessoas";
 import { PessoasService } from "./pessoas.service";
 import { FormularioPessoasComponent } from "./formulario/formulario-pessoas.component";
+import { CommonModule } from "@angular/common";
+import { SharedModule } from "src/app/shared/shared.module";
+import { TituloModule } from "../../components/titulo/titulo.module";
+import { Perfil } from "../perfis/perfis";
+import { SessionService } from "src/app/shared/session.service";
 
 @Component({
     selector: 'app-Pessoas',
     templateUrl: './pessoas.component.html',
-    styleUrls: ['./pessoas.component.css']
+    styleUrls: ['./pessoas.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioPessoasComponent], 
 })
 
 export class PessoasComponent{
@@ -25,17 +32,17 @@ export class PessoasComponent{
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<Pessoas>();
 
+  perfil!: Perfil;
+
   constructor( private sharedService: SharedService,
+    private sessionService: SessionService,
     private PessoasService: PessoasService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [2, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [2, 'asc']}
+
+          this.perfil = this.sessionService.retornaPerfil();
 
           this.data$ = this.PessoasService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

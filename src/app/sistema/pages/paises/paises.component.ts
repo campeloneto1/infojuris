@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioPaisesComponent } from "./formulario/formulario-paises.component";
 import { Pais, Paises } from "./paises";
 import { PaisesService } from "./paises.service";
@@ -9,7 +12,9 @@ import { PaisesService } from "./paises.service";
 @Component({
     selector: 'app-paises',
     templateUrl: './paises.component.html',
-    styleUrls: ['./paises.component.css']
+    styleUrls: ['./paises.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioPaisesComponent], 
 })
 
 export class PaisesComponent{
@@ -29,13 +34,8 @@ export class PaisesComponent{
     private paisesService: PaisesService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
           this.data$ = this.paisesService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

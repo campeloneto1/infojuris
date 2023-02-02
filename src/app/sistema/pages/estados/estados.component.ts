@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { Estado, Estados } from "./estados";
 import { EstadosService } from "./estados.service";
 import { FormularioEstadosComponent } from "./formulario/formulario-estados.component";
@@ -9,7 +12,9 @@ import { FormularioEstadosComponent } from "./formulario/formulario-estados.comp
 @Component({
     selector: 'app-estados',
     templateUrl: './estados.component.html',
-    styleUrls: ['./estados.component.css']
+    styleUrls: ['./estados.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioEstadosComponent], 
 })
 
 export class EstadosComponent{
@@ -29,13 +34,9 @@ export class EstadosComponent{
     private estadosService: EstadosService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [2, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [2, 'asc']}
+        
 
           this.data$ = this.estadosService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

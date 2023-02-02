@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { Escritorio, Escritorios } from "./escritorios";
 import { EscritoriosService } from "./escritorios.service";
 import { FormularioEscritoriosComponent } from "./formulario/formulario-escritorios.component";
@@ -9,7 +12,9 @@ import { FormularioEscritoriosComponent } from "./formulario/formulario-escritor
 @Component({
     selector: 'app-escritorios',
     templateUrl: './escritorios.component.html',
-    styleUrls: ['./escritorios.component.css']
+    styleUrls: ['./escritorios.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioEscritoriosComponent], 
 })
 
 export class EscritoriosComponent implements OnInit, OnDestroy{
@@ -30,17 +35,12 @@ export class EscritoriosComponent implements OnInit, OnDestroy{
     private escritoriosService: EscritoriosService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
-
-          this.data$ = this.escritoriosService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.dtOptions);
-          }));
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
+       
+      this.data$ = this.escritoriosService.index().pipe(tap(() => {
+        this.dtTrigger.next(this.dtOptions);
+      }));
     }
 
     ngOnDestroy(): void {

@@ -5,9 +5,10 @@
         <app-input-select       
         class="col-sm-4"
         [label]="'Pessoa'"
-        [id]="'pessoa_id'"
+        [id]="'pessoa'"
         [data$]="pessoas$"
-        formControlName="pessoa_id"
+        formControlName="pessoa"
+        [config]="config"
       />
 
     </div>

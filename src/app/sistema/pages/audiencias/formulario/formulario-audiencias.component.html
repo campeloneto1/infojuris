@@ -3,10 +3,10 @@
         <app-input-select
         class="col-sm-4"
         [label]="'Processo'"
-        [id]="'processo_id'"
+        [id]="'processo'"
         [data$]="processos$"
-        [optionname]="'codigo'"
-        formControlName="processo_id"
+        [config]="config"
+        formControlName="processo"
       />
     </div>
 
@@ -29,13 +29,14 @@
       <app-input-select
         class="col-sm-2"
         [label]="'Tipo'"
-        [id]="'tipo_id'"
+        [id]="'tipo'"
         [data$]="tipos$"
-        formControlName="tipo_id"
+        [config]="config2"
+        formControlName="tipo"
       />
 
       <app-input-text
-      *ngIf="form.value.tipo_id == 2"
+      *ngIf="form.value.tipo?.id == 2"
       class="col-sm-6"
       [label]="'Link'"
       [id]="'link'"

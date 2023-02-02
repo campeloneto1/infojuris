@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioTribunaisComponent } from "./formulario/formulario-tribunais.component";
 import { Tribunais, Tribunal } from "./tribunais";
 import { TribunaisService } from "./tribunais.service";
@@ -9,7 +12,9 @@ import { TribunaisService } from "./tribunais.service";
 @Component({
     selector: 'app-tribunais',
     templateUrl: './tribunais.component.html',
-    styleUrls: ['./tribunais.component.css']
+    styleUrls: ['./tribunais.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioTribunaisComponent], 
 })
 
 export class TribunaisComponent{
@@ -29,13 +34,8 @@ export class TribunaisComponent{
     private tribunaisService: TribunaisService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
           this.data$ = this.tribunaisService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

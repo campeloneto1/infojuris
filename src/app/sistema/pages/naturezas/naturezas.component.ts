@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioNaturezasComponent } from "./formulario/formulario-naturezas.component";
 import { Natureza, Naturezas } from "./naturezas";
 import { NaturezasService } from "./naturezas.service";
@@ -10,7 +13,9 @@ import { NaturezasService } from "./naturezas.service";
 @Component({
     selector: 'app-naturezas',
     templateUrl: './naturezas.component.html',
-    styleUrls: ['./naturezas.component.css']
+    styleUrls: ['./naturezas.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioNaturezasComponent],
 })
 
 export class NaturezasComponent implements OnInit, OnDestroy{
@@ -30,17 +35,12 @@ export class NaturezasComponent implements OnInit, OnDestroy{
     private naturezasService: NaturezasService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
-          this.data$ = this.naturezasService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.dtOptions);
-          }));
+      this.data$ = this.naturezasService.index().pipe(tap(() => {
+        this.dtTrigger.next(this.dtOptions);
+      }));
     }
 
     ngOnDestroy(): void {

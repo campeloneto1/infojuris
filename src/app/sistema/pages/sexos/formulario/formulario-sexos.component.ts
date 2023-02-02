@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Sexo } from '../sexos';
 import { SexosService } from '../sexos.service';
@@ -8,6 +10,8 @@ import { SexosService } from '../sexos.service';
   selector: 'app-formulario-sexos',
   templateUrl: './formulario-sexos.component.html',
   styleUrls: ['./formulario-sexos.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule], 
 })
 export class FormularioSexosComponent {
   @Output('refresh') refresh: EventEmitter<Sexo> = new EventEmitter();

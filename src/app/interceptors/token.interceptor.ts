@@ -37,11 +37,13 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(event => {
         
-      }, error => {
-        if(error.status == 401){
-          this.router.navigate(['auth']);
-        }
-      })
+          }, 
+          error => {
+            if(error.status == 401){
+              this.router.navigate(['auth']);
+              localStorage.clear();
+            }
+          })
     );
   }
 }

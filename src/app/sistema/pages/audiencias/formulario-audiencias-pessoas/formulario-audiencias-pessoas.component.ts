@@ -1,8 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
-import { Pessoas } from "../../pessoas/pessoas";
+import { Pessoa, Pessoas } from "../../pessoas/pessoas";
 import { PessoasService } from "../../pessoas/pessoas.service";
 import { AudienciaPessoa } from "../audiencias-pessoas";
 import { AudienciasPessoasService } from "../audiencias-pessoas.service";
@@ -10,7 +12,9 @@ import { AudienciasPessoasService } from "../audiencias-pessoas.service";
 @Component({
     selector: 'app-formulario-audiencias-pessoas',
     templateUrl: './formulario-audiencias-pessoas.component.html',
-    styleUrls: ['./formulario-audiencias-pessoas.component.css']
+    styleUrls: ['./formulario-audiencias-pessoas.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule]
 })
 
 export class FormularioAudienciasPessoasComponent implements OnInit{
@@ -19,6 +23,8 @@ export class FormularioAudienciasPessoasComponent implements OnInit{
 
   protected form!: FormGroup;
   protected pessoas$!: Observable<Pessoas>;
+
+  protected config!: any
 
   constructor(
     private audienciasPessoasService: AudienciasPessoasService,
@@ -31,10 +37,14 @@ export class FormularioAudienciasPessoasComponent implements OnInit{
     this.form = this.formBuilder.group({
       id: [''],
       audiencia_id: [''],
-      pessoa_id: ['', [Validators.required]],     
+      pessoa_id: [''],   
+      pessoa: ['', [Validators.required]],     
     });
 
     this.pessoas$ = this.pessoasService.index();
+
+    this.config = this.sharedService.getConfig();
+    this.config = {...this.config, displayFn:(item: Pessoa) => { return `${item.nome} (${item.cpf})`; }, placeholder:'Pessoa'};
    
   }
 
@@ -47,13 +57,17 @@ export class FormularioAudienciasPessoasComponent implements OnInit{
   }
 
   cadastrar() {
-    if(!this.form.value.audiencia_id){
+     //console.log(this.form.value);
+
+     if(this.form.value.pessoa){
+      this.form.get('pessoa_id')?.patchValue(this.form.value.pessoa.id);
+      this.form.get('pessoa')?.patchValue('');
+    }
+    
+     if(!this.form.value.audiencia_id){
         this.form.get('audiencia_id')?.patchValue(this.audiencia_id);
     }
 
-    
-    
-    //console.log(this.form.value);
     if (this.form.value.id) {
       this.audienciasPessoasService.update(this.form.value as AudienciaPessoa).subscribe({
         next: (data) => {

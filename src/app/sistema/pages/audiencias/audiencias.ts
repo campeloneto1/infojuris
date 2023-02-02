@@ -5,7 +5,7 @@ import { Processo } from "../processos/processos";
 import { Status } from "../status/status";
 
 export interface Audiencia{
-    id?: number,
+    id?: number,    
     processo_id: number,
     processo: Processo,
     data: Date,

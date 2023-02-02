@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioPerfisComponent } from "./formulario/formulario-perfis.component";
 import { Perfil, Perfis } from "./perfis";
 import { PerfisService } from "./perfis.service";
@@ -9,7 +12,9 @@ import { PerfisService } from "./perfis.service";
 @Component({
     selector: 'app-perfis',
     templateUrl: './perfis.component.html',
-    styleUrls: ['./perfis.component.css']
+    styleUrls: ['./perfis.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioPerfisComponent], 
 })
 
 export class PerfisComponent{
@@ -29,13 +34,8 @@ export class PerfisComponent{
     private perfisService: PerfisService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
           this.data$ = this.perfisService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

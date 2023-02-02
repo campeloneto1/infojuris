@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioStatusComponent } from "./formulario/formulario-status.component";
 import { Status, Statuss } from "./status";
 import { StatusService } from "./status.service";
@@ -9,7 +12,9 @@ import { StatusService } from "./status.service";
 @Component({
     selector: 'app-status',
     templateUrl: './status.component.html',
-    styleUrls: ['./status.component.css']
+    styleUrls: ['./status.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioStatusComponent], 
 })
 
 export class StatusComponent{
@@ -29,13 +34,8 @@ export class StatusComponent{
     private statusService: StatusService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
           this.data$ = this.statusService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

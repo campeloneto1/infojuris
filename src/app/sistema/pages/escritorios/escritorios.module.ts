@@ -6,7 +6,7 @@ import { EscritoriosComponent } from "./escritorios.component";
 import { FormularioEscritoriosComponent } from "./formulario/formulario-escritorios.component";
 
 @NgModule({
-    declarations: [EscritoriosComponent, FormularioEscritoriosComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

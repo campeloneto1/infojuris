@@ -6,7 +6,7 @@ import { FormularioStatusComponent } from "./formulario/formulario-status.compon
 import { StatusComponent } from "./status.component";
 
 @NgModule({
-    declarations: [StatusComponent, FormularioStatusComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

@@ -16,9 +16,10 @@
         (ngModelChange)="getComarcas()"
         class="col-sm-2"
         [label]="'Tribunal'"
-        [id]="'tribunal_id'"
+        [id]="'tribunal'"
         [data$]="tribunais$"
-        formControlName="tribunal_id"
+        formControlName="tribunal"
+        [config]="config2"
       />
   
       <app-input-select
@@ -26,25 +27,28 @@
         (ngModelChange)="getVaras()"
         class="col-sm-2"
         [label]="'Comarca'"
-        [id]="'comarca_id'"
+        [id]="'comarca'"
         [data$]="comarcas$"
-        formControlName="comarca_id"
+        formControlName="comarca"
+        [config]="config3"
       />
   
       <app-input-select
         class="col-sm-2"
         [label]="'Vara'"
-        [id]="'vara_id'"
+        [id]="'vara'"
         [data$]="varas$"
-        formControlName="vara_id"
+        formControlName="vara"
+        [config]="config4"
       />
 
       <app-input-select
         class="col-sm-2"
         [label]="'Natureza'"
-        [id]="'natureza_id'"
+        [id]="'natureza'"
         [data$]="naturezas$"
-        formControlName="natureza_id"
+        formControlName="natureza"
+        [config]="config"
       />
   
       

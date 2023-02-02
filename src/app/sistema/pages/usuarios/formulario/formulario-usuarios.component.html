@@ -19,10 +19,11 @@
     <app-input-select
       class="col-sm-4"
       [label]="'Escritorio'"
-      [id]="'escritorio_id'"
+      [id]="'escritorio'"
       [data$]="escritorios$"
       [optionname]="'nome'"
-      formControlName="escritorio_id"
+      formControlName="escritorio"
+      [config]="config"
     ></app-input-select>
     
     <!--<div class="col-sm-4">
@@ -86,9 +87,10 @@
     <app-input-select
       class="col-sm-2"
       [label]="'Perfil'"
-      [id]="'perfil_id'"
+      [id]="'perfil'"
       [data$]="perfis$"
-      formControlName="perfil_id"
+      formControlName="perfil"
+      [config]="config2"
     ></app-input-select>
 
     

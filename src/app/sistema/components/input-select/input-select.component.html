@@ -3,25 +3,29 @@
     {{ label }}
     <span *ngIf="control?.errors?.['required']" class="text-danger">*</span>
   </label>
-    <!--<ngx-select-dropdown
-          [(ngModel)]="inputvalor"
-          (change)="change()"
-          id="{{ id }}"
-          [config]="config"
-          [options]="data"
-        ></ngx-select-dropdown>-->
+    
   <div *ngIf="data$ | async as data">
-    <ngx-select
+    <!--<ngx-select
       [items]="data"
       [(ngModel)]="inputvalor"
       (select)="change()"
       placeholder="{{ label }}"
       [allowClear]="allowclear"
-      optionValueField="{{optionid}}"
-      optionTextField="{{optionname}}"
+      [optionValueField]="optionid"
+      [optionTextField]="optionname"
     >
-   
-  </ngx-select>
+      <ng-template ngx-select-option-selected ngx-select-option let-option let-text="text">
+        <span [innerHtml]="text"></span>, {{option.data[optionname2]}}
+    </ng-template>
+  </ngx-select>-->
+
+      <ngx-select-dropdown
+          [(ngModel)]="inputvalor"
+          (change)="change()"
+          id="{{ id }}"
+          [config]="config"
+          [options]="data"
+        ></ngx-select-dropdown>
 
     <div *ngIf="control?.invalid && (control?.dirty || control?.touched)">
       <span *ngIf="control?.errors?.['required']" class="text-danger"

@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
 import { Status } from "../status";
 import { StatusService } from "../status.service";
@@ -7,7 +9,9 @@ import { StatusService } from "../status.service";
 @Component({
     selector: 'app-formulario-status',
     templateUrl: './formulario-status.component.html',
-    styleUrls: ['./formulario-status.component.css']
+    styleUrls: ['./formulario-status.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule], 
 })
 
 export class FormularioStatusComponent{

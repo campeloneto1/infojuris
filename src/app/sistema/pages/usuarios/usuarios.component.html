@@ -6,6 +6,7 @@
       <div class="card-header">
         <h3 class="card-title">
           <button
+          *ngIf="perfil.usuarios_cad"
             data-bs-toggle="modal"
             data-bs-target="#modalcad"
             class="btn btn-outline-primary"
@@ -15,7 +16,7 @@
           </button>
         </h3>
       </div>
-      <div class="card-body p-2">
+      <div class="card-body table-responsive p-2">
         <table
           datatable
           [dtOptions]="dtOptions"
@@ -43,9 +44,10 @@
               <td>{{ row.cpf | mask : "000.000.000-00" }}</td>
               <td>{{ row.telefone1 | mask : "(00) 0 0000-0000" }}</td>
               <td>{{ row.email }}</td>
-              <td>{{ row.perfil?.nome }}</td>
+              <td>{{ row.perfil.nome }}</td>
               <td>
                 <a
+                *ngIf="perfil.usuarios_edt"
                   class="options"
                   (click)="edit(row)"
                   data-bs-toggle="modal"
@@ -57,6 +59,7 @@
                   ></i>
                 </a>
                 <a
+                *ngIf="perfil.usuarios_del"
                   class="options"
                   (click)="delete(row)"
                   data-bs-toggle="modal"

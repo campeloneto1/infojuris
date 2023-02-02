@@ -1,17 +1,26 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SessionService } from "src/app/shared/session.service";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
+import { Perfil } from "../perfis/perfis";
 import { Pessoa } from "../pessoas/pessoas";
 import { Audiencia, Audiencias } from "./audiencias";
 import { AudienciasPessoasService } from "./audiencias-pessoas.service";
 import { AudienciasService } from "./audiencias.service";
+import { FormularioAudienciasPessoasComponent } from "./formulario-audiencias-pessoas/formulario-audiencias-pessoas.component";
 import { FormularioAudienciasComponent } from "./formulario/formulario-audiencias.component";
 
 @Component({
     selector: 'app-audiencias',
     templateUrl: './audiencias.component.html',
-    styleUrls: ['./audiencias.component.css']
+    styleUrls: ['./audiencias.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioAudienciasComponent, FormularioAudienciasPessoasComponent], 
+    
 })
 
 export class AudienciasComponent{
@@ -23,6 +32,7 @@ export class AudienciasComponent{
     cadtest = false;
     deltest = false;
     
+    perfil!: Perfil;
   
     @ViewChild(FormularioAudienciasComponent) child!: FormularioAudienciasComponent;
     @ViewChild(DataTableDirective, { static: false })
@@ -36,19 +46,17 @@ export class AudienciasComponent{
   
     constructor(
       private sharedService: SharedService,
+      private sessionService: SessionService,
       private audienciasService: AudienciasService,
       private audienciasPessoasService: AudienciasPessoasService,
     ) {}
   
     ngOnInit(): void {
-      this.dtOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10,
-        processing: true,
-        responsive: true,
-        order: [0, 'desc'],
-      };
-  
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [0, 'desc']}
+        
+      this.perfil = this.sessionService.retornaPerfil();
+
       this.data$ = this.audienciasService.index().pipe(
         tap(() => {
           this.dtTrigger.next(this.dtOptions);

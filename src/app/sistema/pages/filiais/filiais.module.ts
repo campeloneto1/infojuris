@@ -6,7 +6,7 @@ import { FiliaisComponent } from "./filiais.component";
 import { FormularioFiliaisComponent } from "./formulario/formulario-filiais.component";
 
 @NgModule({
-    declarations: [FiliaisComponent, FormularioFiliaisComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports:[ ]
 })

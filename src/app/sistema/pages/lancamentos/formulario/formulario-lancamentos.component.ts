@@ -1,8 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
-import { Escritorios } from "../../escritorios/escritorios";
+import { Escritorio, Escritorios } from "../../escritorios/escritorios";
 import { EscritoriosService } from "../../escritorios/escritorios.service";
 import { Lancamento } from "../lancamentos";
 import { LancamentosService } from "../lancamentos.service";
@@ -10,7 +12,9 @@ import { LancamentosService } from "../lancamentos.service";
 @Component({
     selector: 'app-formulario-lancamentos',
     templateUrl: './formulario-lancamentos.component.html',
-    styleUrls: ['./formulario-lancamentos.component.css']
+    styleUrls: ['./formulario-lancamentos.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule], 
 })
 
 export class FormularioLancamentosComponent{
@@ -19,6 +23,7 @@ export class FormularioLancamentosComponent{
   
     protected escritorios$!: Observable<Escritorios>;
 
+    protected config!: any
   
     constructor(
       private escritoriosService: EscritoriosService,
@@ -30,7 +35,8 @@ export class FormularioLancamentosComponent{
     ngOnInit(): void {
       this.form = this.formBuilder.group({
         id: [''],
-        escritorio_id: ['', [Validators.required]],
+        escritorio: ['', [Validators.required]],
+        escritorio_id: [''],
         codigo: [''],
         valor: [''],
         valor_liquido: [''],
@@ -42,8 +48,10 @@ export class FormularioLancamentosComponent{
         pagseguro_id: [ '' ],
         status: [ '' ],
       });
-  
-  
+
+      this.config = this.sharedService.getConfig();
+      this.config = {...this.config, displayFn:(item: Escritorio) => { return `${item.nome}`; }, placeholder:'Escritório'};
+
       this.escritorios$ = this.escritoriosService.index();
    
     }
@@ -57,6 +65,10 @@ export class FormularioLancamentosComponent{
     }
   
     cadastrar() {
+      if(this.form.value.escritorio){
+        this.form.get('escritorio_id')?.patchValue(this.form.value.escritorio.id);
+        this.form.get('escritorio')?.patchValue('');
+      }
       //console.log(this.form.value);
       if (this.form.value.id) {
         this.lancamentosService.update(this.form.value as Lancamento).subscribe({

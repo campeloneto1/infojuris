@@ -4,17 +4,19 @@
         (ngModelChange)="getComarcas()"
         class="col-sm-2"
         [label]="'Tribunal'"
-        [id]="'tribunal_id'"
+        [id]="'tribunal'"
         [data$]="tribunais$"
-        formControlName="tribunal_id"
+        formControlName="tribunal"
+        [config]="config"
       ></app-input-select>
 
       <app-input-select
         class="col-sm-2"
         [label]="'Comarca'"
-        [id]="'comarca_id'"
+        [id]="'comarca'"
         [data$]="comarcas$"
-        formControlName="comarca_id"
+        formControlName="comarca"
+        [config]="config2"
       ></app-input-select>
   
       <app-input-text
@@ -63,9 +65,11 @@
         (ngModelChange)="getEstados()"
         class="col-sm-2"
         [label]="'País'"
-        [id]="'pais_id'"
+        [id]="'pais'"
         [data$]="paises$"
-        formControlName="pais_id"
+        formControlName="pais"
+        [config]="config3"
+        
       ></app-input-select>
   
       <app-input-select
@@ -73,17 +77,20 @@
         (ngModelChange)="getCidades()"
         class="col-sm-2"
         [label]="'Estado'"
-        [id]="'estado_id'"
+        [id]="'estado'"
         [data$]="estados$"
-        formControlName="estado_id"
+        formControlName="estado"
+        [config]="config4"
       ></app-input-select>
   
       <app-input-select
         class="col-sm-2"
         [label]="'Cidade'"
-        [id]="'cidade_id'"
+        [id]="'cidade'"
         [data$]="cidades$"
-        formControlName="cidade_id"
+        formControlName="cidade"
+        [config]="config5"
+
       ></app-input-select>
   
     </div>

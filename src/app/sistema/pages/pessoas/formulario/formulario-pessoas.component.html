@@ -28,18 +28,20 @@
         
         class="col-sm-2"
         [label]="'Nacionalidade'"
-        [id]="'nacionalidade_id'"
+        [id]="'nacionalidade'"
         [data$]="paises$"
-        formControlName="nacionalidade_id"
+        formControlName="nacionalidade"
+        [config]="config3"
        />
 
        <app-input-select
         
         class="col-sm-2"
         [label]="'Ocupação'"
-        [id]="'ocupacao_id'"
+        [id]="'ocupacao'"
         [data$]="ocupacoes$"
-        formControlName="ocupacao_id"
+        formControlName="ocupacao"
+        [config]="config4"
        />
   
      
@@ -64,18 +66,20 @@
         
         class="col-sm-2"
         [label]="'Sexo'"
-        [id]="'sexo_id'"
+        [id]="'sexo'"
         [data$]="sexos$"
-        formControlName="sexo_id"
+        formControlName="sexo"
+        [config]="config2"
        />
 
        <app-input-select
         
         class="col-sm-2"
         [label]="'Estado Civil'"
-        [id]="'estado_civil_id'"
+        [id]="'estado_civil'"
         [data$]="estadoscivis$"
-        formControlName="estado_civil_id"
+        formControlName="estado_civil"
+        [config]="config"
        />
     </div>
     <div class="row">
@@ -114,9 +118,10 @@
         (ngModelChange)="getEstados()"
         class="col-sm-2"
         [label]="'País'"
-        [id]="'pais_id'"
+        [id]="'pais'"
         [data$]="paises$"
-        formControlName="pais_id"
+        formControlName="pais"
+        [config]="config5"
       />
   
       <app-input-select
@@ -124,17 +129,19 @@
         (ngModelChange)="getCidades()"
         class="col-sm-2"
         [label]="'Estado'"
-        [id]="'estado_id'"
+        [id]="'estado'"
         [data$]="estados$"
-        formControlName="estado_id"
+        formControlName="estado"
+        [config]="config6"
       />
   
       <app-input-select
         class="col-sm-2"
         [label]="'Cidade'"
-        [id]="'cidade_id'"
+        [id]="'cidade'"
         [data$]="cidades$"
-        formControlName="cidade_id"
+        formControlName="cidade"
+        [config]="config7"
       />
   
     </div>

@@ -7,7 +7,7 @@ import { FormularioAudienciasPessoasComponent } from "./formulario-audiencias-pe
 import { FormularioAudienciasComponent } from "./formulario/formulario-audiencias.component";
 
 @NgModule({
-    declarations: [AudienciasComponent, FormularioAudienciasComponent, FormularioAudienciasPessoasComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule, TituloModule],
     exports: []
 })

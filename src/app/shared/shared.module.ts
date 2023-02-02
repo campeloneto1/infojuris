@@ -37,7 +37,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     InputTextModule,
     InputSelectModule,
     RouterModule,
-    CalendarModule
+    CalendarModule,
   ],
 })
 export class SharedModule {}

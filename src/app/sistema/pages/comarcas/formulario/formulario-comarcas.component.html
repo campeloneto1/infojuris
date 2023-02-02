@@ -3,9 +3,10 @@
     <app-input-select
       class="col-sm-2"
       [label]="'Tribunal'"
-      [id]="'tribunal_id'"
+      [id]="'tribunal'"
       [data$]="tribunais$"
-      formControlName="tribunal_id"
+      [config]="config"
+      formControlName="tribunal"
     ></app-input-select>
 
     <app-input-text
@@ -54,9 +55,10 @@
       (ngModelChange)="getEstados()"
       class="col-sm-2"
       [label]="'País'"
-      [id]="'pais_id'"
+      [id]="'pais'"
       [data$]="paises$"
-      formControlName="pais_id"
+      [config]="config2"
+      formControlName="pais"
     ></app-input-select>
 
     <app-input-select
@@ -64,17 +66,19 @@
       (ngModelChange)="getCidades()"
       class="col-sm-2"
       [label]="'Estado'"
-      [id]="'estado_id'"
+      [id]="'estado'"
       [data$]="estados$"
-      formControlName="estado_id"
+      [config]="config3"
+      formControlName="estado"
     ></app-input-select>
 
     <app-input-select
       class="col-sm-2"
       [label]="'Cidade'"
-      [id]="'cidade_id'"
+      [id]="'cidade'"
       [data$]="cidades$"
-      formControlName="cidade_id"
+      [config]="config4"
+      formControlName="cidade"
     ></app-input-select>
 
   </div>

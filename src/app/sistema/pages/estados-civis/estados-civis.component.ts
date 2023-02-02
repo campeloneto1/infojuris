@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { EstadoCivil, EstadosCivis } from "./estados-civis";
 import { EstadosCivisService } from "./estados-civis.service";
 import { FormularioEstadosCivisComponent } from "./formulario/formulario-estados-civis.component";
@@ -9,7 +12,9 @@ import { FormularioEstadosCivisComponent } from "./formulario/formulario-estados
 @Component({
     selector: 'app-estados-civis',
     templateUrl: './estados-civis.component.html',
-    styleUrls: ['./estados-civis.component.css']
+    styleUrls: ['./estados-civis.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioEstadosCivisComponent], 
 })
 
 export class EstadosCivisComponent{
@@ -29,17 +34,12 @@ export class EstadosCivisComponent{
     private estadosCivisService: EstadosCivisService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
-          this.data$ = this.estadosCivisService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.dtOptions);
-          }));
+      this.data$ = this.estadosCivisService.index().pipe(tap(() => {
+        this.dtTrigger.next(this.dtOptions);
+      }));
     }
 
     ngOnDestroy(): void {

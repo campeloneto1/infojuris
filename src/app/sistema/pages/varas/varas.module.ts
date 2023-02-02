@@ -6,7 +6,7 @@ import { FormularioVarasComponent } from "./formulario/formulario-varas.componen
 import { VarasComponent } from "./varas.component";
 
 @NgModule({
-    declarations: [VarasComponent, FormularioVarasComponent],
+    declarations: [],
     imports: [CommonModule, SharedModule,TituloModule ],
     exports: []
 })

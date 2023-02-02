@@ -1,39 +1,45 @@
-import { Component, forwardRef, Input } from "@angular/core";
-import { AbstractControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Component, forwardRef, Input } from '@angular/core';
+import {
+  AbstractControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-input-select',
-    templateUrl: './input-select.component.html',
-    styleUrls: ['./input-select.component.css'],
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        multi: true,
-        useExisting: forwardRef(() => InputSelectComponent)
+  selector: 'app-input-select',
+  templateUrl: './input-select.component.html',
+  styleUrls: ['./input-select.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => InputSelectComponent),
     },
     {
-        provide: NG_VALIDATORS,
-        multi: true,
-        useExisting: InputSelectComponent
-      },
-    ]   
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: InputSelectComponent,
+    },
+  ],
 })
-
-export class InputSelectComponent{
-
-    inputvalor = 0;
-    control!: AbstractControl;
+export class InputSelectComponent {
+  
+  inputvalor = 0;
+  control!: AbstractControl;
 
   @Input() id!: string;
   @Input() label!: string;
-  @Input() data$!: Observable<any> ;
+  @Input() data$!: Observable<any>;
   @Input() disabled: boolean = false;
 
   @Input() optionid: string = 'id';
   @Input() optionname: any = 'nome';
   @Input() allowclear: boolean = true;
+  @Input() config: any;
 
-  onChange = (inputvalor:number) => {};
+  onChange = (inputvalor: number) => {};
 
   onTouched = () => {};
 
@@ -41,13 +47,12 @@ export class InputSelectComponent{
 
   change() {
     this.markAsTouched();
-    if (!this.disabled) {      
+    if (!this.disabled) {
       this.onChange(this.inputvalor);
     }
   }
 
   writeValue(inputvalor: number) {
-    
     this.inputvalor = inputvalor;
   }
 
@@ -70,7 +75,7 @@ export class InputSelectComponent{
     this.disabled = disabled;
   }
 
-  validate(control: AbstractControl): ValidationErrors | void  {
+  validate(control: AbstractControl): ValidationErrors | void {
     this.control = control;
     //console.log(control)
   }

@@ -29,44 +29,44 @@
             <p>Agenda</p>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="perfil.audiencias">
           <a routerLink="Audiencias" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-gavel"></i>
             <p>Audiências</p>
           </a>
         </li>
         
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="perfil.administrador">
           <a routerLink="Escritorios" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-building"></i>
             <p>Escritórios</p>
           </a>
         </li> 
-        <!--<li class="nav-item">
+        <!--<li class="nav-item" *ngIf="perfil.filiais">
           <a routerLink="Filiais" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-sitemap"></i>
             <p>Filiais</p>
           </a>
         </li>  
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="perfil.lancamentos">
           <a routerLink="Lancamentos" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-credit-card" aria-hidden="true"></i>
             <p>Lançamentos</p>
           </a>
         </li>  -->
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="perfil.pessoas">
           <a routerLink="Pessoas" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
             <p>Pessoas</p>
           </a>
         </li>      
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="perfil.processos">
           <a routerLink="Processos" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-folder-open"></i>
             <p>Processos</p>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"  *ngIf="perfil.usuarios">
           <a routerLink="Usuarios" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
             <p>Usuários</p>
@@ -74,7 +74,7 @@
         </li>
         
        
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="perfil.administrador">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
             <p>

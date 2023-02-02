@@ -1,7 +1,12 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SessionService } from "src/app/shared/session.service";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
+import { Perfil } from "../perfis/perfis";
 import { Filiais, Filial } from "./filiais";
 import { FiliaisService } from "./filiais.service";
 import { FormularioFiliaisComponent } from "./formulario/formulario-filiais.component";
@@ -9,7 +14,9 @@ import { FormularioFiliaisComponent } from "./formulario/formulario-filiais.comp
 @Component({
     selector: 'app-filiais',
     templateUrl: './filiais.component.html',
-    styleUrls: ['./filiais.component.css']
+    styleUrls: ['./filiais.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioFiliaisComponent], 
 })
 
 export class FiliaisComponent{
@@ -25,21 +32,21 @@ export class FiliaisComponent{
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<Filiais>();
 
+  perfil!: Perfil;
+
   constructor( private sharedService: SharedService,
+    private sessionService: SessionService,
     private filiaisService: FiliaisService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [[1, 'asc'],[2, 'asc']],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [[1, 'asc'],[2, 'asc']]}
+    
+      this.perfil = this.sessionService.retornaPerfil();
 
-          this.data$ = this.filiaisService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.dtOptions);
-          }));
+      this.data$ = this.filiaisService.index().pipe(tap(() => {
+        this.dtTrigger.next(this.dtOptions);
+      }));
     }
 
     ngOnDestroy(): void {

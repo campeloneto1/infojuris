@@ -2,8 +2,209 @@
     <div class="row">
        <app-input-text class="col-sm-4" [label]="'Nome'" [id]="'nome'" [tipo]="'text'"  formControlName="nome" />    
        
-       <app-input-text class="col-sm-2" [label]="'Administrador'" [id]="'administrador'" [tipo]="'checkbox'" formControlName="administrador" />    
-       <app-input-text class="col-sm-2" [label]="'Gestor'" [id]="'gestor'" [tipo]="'checkbox'"  formControlName="gestor" />    
+       <div class="col-sm-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" checked="" id="administrador" formControlName="administrador">
+          <label class="form-check-label">Administrador</label>
+         </div>
+       </div>
+       
+
+       <div class="col-sm-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" checked="" id="gestor" formControlName="gestor">
+          <label class="form-check-label">Gestor</label>
+         </div>
+       </div>
+       <!-- INICIO PERMISSOES AUDIENCIAS-->
+       <hr />
+       <div class="row">
+          <h4>Audiências</h4>
+
+          <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="audiencias" formControlName="audiencias">
+              <label class="form-check-label">Consulta</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="audiencias_cad" formControlName="audiencias_cad">
+              <label class="form-check-label">Cadastro</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="audiencias_edt" formControlName="audiencias_edt">
+              <label class="form-check-label">Edição</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="audiencias_del" formControlName="audiencias_del">
+              <label class="form-check-label">Exclusão</label>
+             </div>
+           </div>
+       </div>
+       <!-- FIM PERMISSOES AUDIENCIAS-->
+       <!-- INICIO PERMISSOES FILIAIS-->
+       <hr />
+       <div class="row">
+          <h4>Filiais</h4>
+
+          <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="filiais" formControlName="filiais">
+              <label class="form-check-label">Consulta</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="filiais_cad" formControlName="filiais_cad">
+              <label class="form-check-label">Cadastro</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="filiais_edt" formControlName="filiais_edt">
+              <label class="form-check-label">Edição</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="filiais_del" formControlName="filiais_del">
+              <label class="form-check-label">Exclusão</label>
+             </div>
+           </div>
+       </div>
+       <!-- INICIO PERMISSOES FILIAIS-->
+       <!-- INICIO PERMISSOES LANCAMENTOS-->
+       <hr />
+       <div class="row">
+          <h4>Lançamentos</h4>
+
+          <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="lancamentos" formControlName="lancamentos">
+              <label class="form-check-label">Consulta</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="lancamentos_cad" formControlName="lancamentos_cad">
+              <label class="form-check-label">Cadastro</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="lancamentos_edt" formControlName="lancamentos_edt">
+              <label class="form-check-label">Edição</label>
+             </div>
+           </div>
+           <div class="col-sm-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" checked="" id="lancamentos_del" formControlName="lancamentos_del">
+              <label class="form-check-label">Exclusão</label>
+             </div>
+           </div>
+       </div>
+       <!-- FIM PERMISSOES LANCAMENTOS-->
+        <!-- INICIO PERMISSOES PESSOAS-->
+        <hr />
+        <div class="row">
+           <h4>Pessoas</h4>
+ 
+           <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="pessoas" formControlName="pessoas">
+               <label class="form-check-label">Consulta</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="pessoas_cad" formControlName="pessoas_cad">
+               <label class="form-check-label">Cadastro</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="pessoas_edt" formControlName="pessoas_edt">
+               <label class="form-check-label">Edição</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="pessoas_del" formControlName="pessoas_del">
+               <label class="form-check-label">Exclusão</label>
+              </div>
+            </div>
+        </div>
+        <!-- FIM PERMISSOES PESSOAS-->
+        <!-- INICIO PERMISSOES PROCESSOS-->
+        <hr />
+        <div class="row">
+           <h4>Processos</h4>
+ 
+           <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="processos" formControlName="processos">
+               <label class="form-check-label">Consulta</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="processos_cad" formControlName="processos_cad">
+               <label class="form-check-label">Cadastro</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="processos_edt" formControlName="processos_edt">
+               <label class="form-check-label">Edição</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="processos_del" formControlName="processos_del">
+               <label class="form-check-label">Exclusão</label>
+              </div>
+            </div>
+        </div>
+        <!-- FIM PERMISSOES PROCESSOS-->
+        <!-- INICIO PERMISSOES usuarios-->
+        <hr />
+        <div class="row">
+           <h4>Usuários</h4>
+ 
+           <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="usuarios" formControlName="usuarios">
+               <label class="form-check-label">Consulta</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="usuarios_cad" formControlName="usuarios_cad">
+               <label class="form-check-label">Cadastro</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="usuarios_edt" formControlName="usuarios_edt">
+               <label class="form-check-label">Edição</label>
+              </div>
+            </div>
+            <div class="col-sm-2">
+             <div class="form-check">
+               <input class="form-check-input" type="checkbox" checked="" id="usuarios_del" formControlName="usuarios_del">
+               <label class="form-check-label">Exclusão</label>
+              </div>
+            </div>
+        </div>
+        <!-- FIM PERMISSOES usuarios-->
+
+       <!--<app-input-text class="col-sm-2" [label]="'Administrador'" [id]="'administrador'" [tipo]="'checkbox'" formControlName="administrador" />    
+       <app-input-text class="col-sm-2" [label]="'Gestor'" [id]="'gestor'" [tipo]="'checkbox'"  formControlName="gestor" />    -->
     </div>
   
     <hr />

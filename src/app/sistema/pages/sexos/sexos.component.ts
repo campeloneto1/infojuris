@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { FormularioSexosComponent } from "./formulario/formulario-sexos.component";
 import { Sexo, Sexos } from "./sexos";
 import { SexosService } from "./sexos.service";
@@ -9,7 +12,9 @@ import { SexosService } from "./sexos.service";
 @Component({
     selector: 'app-sexos',
     templateUrl: './sexos.component.html',
-    styleUrls: ['./sexos.component.css']
+    styleUrls: ['./sexos.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioSexosComponent], 
 })
 
 export class SexosComponent{
@@ -29,13 +34,8 @@ export class SexosComponent{
     private sexosService: SexosService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [1, 'asc'],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [1, 'asc']}
 
           this.data$ = this.sexosService.index().pipe(tap(() => {
             this.dtTrigger.next(this.dtOptions);

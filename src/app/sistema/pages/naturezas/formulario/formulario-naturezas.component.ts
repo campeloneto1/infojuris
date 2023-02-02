@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Natureza } from '../naturezas';
 import { NaturezasService } from '../naturezas.service';
@@ -8,6 +10,8 @@ import { NaturezasService } from '../naturezas.service';
   selector: 'app-formulario-naturezas',
   templateUrl: './formulario-naturezas.component.html',
   styleUrls: ['./formulario-naturezas.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule],
 })
 export class FormularioNaturezasComponent implements OnInit {
   @Output('refresh') refresh: EventEmitter<Natureza> = new EventEmitter();

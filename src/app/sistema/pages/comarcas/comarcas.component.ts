@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
+import { SharedModule } from "src/app/shared/shared.module";
 import { SharedService } from "src/app/shared/shared.service";
+import { TituloModule } from "../../components/titulo/titulo.module";
 import { Comarca, Comarcas } from "./comarcas";
 import { ComarcasService } from "./comarcas.service";
 import { FormularioComarcasComponent } from "./formulario/formulario-comarcas.component";
@@ -9,7 +12,9 @@ import { FormularioComarcasComponent } from "./formulario/formulario-comarcas.co
 @Component({
     selector: 'app-comarcas',
     templateUrl: './comarcas.component.html',
-    styleUrls: ['./comarcas.component.css']
+    styleUrls: ['./comarcas.component.css'],
+    standalone: true,
+    imports: [CommonModule, SharedModule, TituloModule, FormularioComarcasComponent], 
 })
 
 export class ComarcasComponent{
@@ -29,17 +34,12 @@ export class ComarcasComponent{
     private comarcasService: ComarcasService) {}
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            processing: true,
-            responsive: true,
-            order: [[1, 'asc'],[2, 'asc']],
-          };
+      this.dtOptions = this.sharedService.getDtOptions();
+      this.dtOptions = {...this.dtOptions, order: [[1, 'asc'],[2, 'asc']]}
 
-          this.data$ = this.comarcasService.index().pipe(tap(() => {
-            this.dtTrigger.next(this.dtOptions);
-          }));
+      this.data$ = this.comarcasService.index().pipe(tap(() => {
+        this.dtTrigger.next(this.dtOptions);
+      }));
     }
 
     ngOnDestroy(): void {

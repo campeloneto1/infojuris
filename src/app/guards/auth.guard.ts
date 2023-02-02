@@ -20,25 +20,6 @@ export class AuthGuard implements CanMatch {
     private router: Router){
      }
 
-    administrador = [
-      '/Cidades',
-      '/Comarcas',
-      '/Escritorios',
-      '/Estados',
-      '/Estados-Civis',
-      '/Naturezas',
-      '/Ocupacoes',
-      '/Paises',
-      '/Perfis',      
-      '/Status',
-      '/Sexos',
-      '/Tribunais',
-      '/Varas',
-    ]
-
-    perfil = this.sessionService.retornaPerfil();
-
-    
     canMatch(
       route: Route,
       segments: UrlSegment[]
