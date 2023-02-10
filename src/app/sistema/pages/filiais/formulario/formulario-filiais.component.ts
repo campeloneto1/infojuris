@@ -104,11 +104,11 @@ export class FormularioFiliaisComponent{
   setForm(data: Filial) {
     this.form.patchValue(data);
     if(data.cidade.id){
-      //this.form.get('estado_id')?.patchValue(data.cidade.estado_id);
+      this.form.get('estado')?.patchValue(data.cidade.estado);
       this.estados$ = this.sharedService.getEstados(data.cidade.estado.pais_id);
     }
     if(data.cidade.estado.id){
-      //this.form.get('pais_id')?.patchValue(data.cidade.estado.pais_id);
+      this.form.get('pais')?.patchValue(data.cidade.estado.pais);
       this.cidades$ = this.sharedService.getCidades(data.cidade.estado_id);
     }   
   }

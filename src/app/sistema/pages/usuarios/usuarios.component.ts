@@ -22,6 +22,7 @@ import { Perfil } from '../perfis/perfis';
 export class UsuariosComponent implements OnInit, OnDestroy {
   data$!: Observable<Usuarios>;
   excluir!: Usuario;
+  pass!: Usuario;
 
   @ViewChild(FomularioUsuariosComponent) child! : FomularioUsuariosComponent;
   @ViewChild(DataTableDirective, {static: false})  dtElement!: DataTableDirective;
@@ -66,9 +67,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
         this.dtTrigger.next(this.dtOptions);
       });
     }));;
-    
-    
-    
   }
 
   resetarForm(){
@@ -95,5 +93,22 @@ export class UsuariosComponent implements OnInit, OnDestroy {
         this.sharedService.toast('Error!', error.erro as string , 2);
       }
     })
+  }
+
+  resetpass(data: Usuario){
+    this.pass = data;
+  }
+
+  confirmPass(){
+      this.usuariosService.resetpass(this.pass.id || 0).subscribe({
+        next: (data) => {
+          this.sharedService.toast('Sucesso!', data as string , 3);
+          this.pass = {} as Usuario;
+          this.refresh();
+        },
+        error: (error) => {
+          this.sharedService.toast('Error!', error.erro as string , 2);
+        }
+      })
   }
 }

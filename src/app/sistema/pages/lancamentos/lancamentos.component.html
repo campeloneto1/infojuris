@@ -56,7 +56,17 @@
                   <span *ngIf="row.status == 3" class="padd badge text-bg-warning">Em Atraso</span>
                 </td>   
                 <td>
-                  
+                  <a
+                    [routerLink]="['/Lancamento', row.id]"
+                    class="options ml-2"
+                    (click)="edit(row)"
+                   
+                  >
+                    <i
+                      class="fas fa-credit-card text-primary point "
+                      aria-hidden="true"
+                    ></i>
+                  </a>
                   <a
                   *ngIf="perfil.lancamentos_edt"
                     class="options ml-2"

@@ -16,6 +16,14 @@ export class UsuariosService {
     return this.http.get<Usuarios>(`${API}/users`);
   }
 
+  changpass(data: any){
+    return this.http.post(`${API}/users-changpass`,data);
+  }
+
+  resetpass(id: number){
+    return this.http.get(`${API}/users/${id}/resetpass`);
+  }
+
   store(data: Usuario){
     return this.http.post(`${API}/users`,data);
   }

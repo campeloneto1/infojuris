@@ -79,8 +79,8 @@ export class FormularioPerfisComponent{
   }
 
   cadastrar() {
-    console.log(this.form.value);
-    /*if (this.form.value.id) {
+    //console.log(this.form.value);
+    if (this.form.value.id) {
       this.perfisService.update(this.form.value as Perfil).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso!', data as string, 3);
@@ -102,6 +102,6 @@ export class FormularioPerfisComponent{
           this.sharedService.toast('Error!', error.erro as string, 2);
         },
       });
-    }*/
+    }
   }
 }

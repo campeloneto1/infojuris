@@ -17,6 +17,10 @@ export class AudienciasService{
         return this.http.get<Audiencias>(`${API}/audiencias`);
       }
 
+      calendario(): Observable<Audiencias> {
+        return this.http.get<Audiencias>(`${API}/audiencias-calendario`);
+      }
+
       where(id: number): Observable<Audiencias> {
         return this.http.get<Audiencias>(`${API}/audiencias/${id}/where`);
       }

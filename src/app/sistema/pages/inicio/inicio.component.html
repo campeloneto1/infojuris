@@ -1,21 +1,86 @@
 <div class="content-wrapper">
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Início</h1>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Início</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item active">Início</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <!-- CARD QUANT POR STATUS-->
+      <div class="col-sm-4" *ngIf="quantporstatus$ | async as quantporstatus">
+        <div class="card">
+          <div class="card-header border-0">
+            <h3 class="card-title">Processos por Status</h3>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Início</li>
-            </ol>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover table-valign-middle">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Quantidade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let quantstat of quantporstatus">
+                  <td>
+                    {{ quantstat.nome }}
+                  </td>
+                  <td>{{ quantstat.quant }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </section>
-  
-    <section class="content">
-      
-    </section>
-  </div>
-  
+      <!-- FIM CARD QUANT POR STATUS-->
+      <!-- CARD PROXIMAS AUDIENCIAS -->
+      <div class="col-sm-6 offset-sm-2" *ngIf="proximasaudiencias$ | async as proximasaudiencias">
+        <div class="card">
+          <div class="card-header border-0">
+            <h3 class="card-title">Próximas Audiências</h3>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover table-valign-middle">
+              <thead>
+                <tr>
+                  <th>Processo</th>
+                  <th>Data</th>
+                  <th>Hora</th>
+                  <th>Vara</th>
+                  <th>Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let proxaudi of proximasaudiencias">
+                  <td>
+                    <a [routerLink]="['Processo', proxaudi.processo_id]">
+                      {{ proxaudi.processo.codigo }}
+                    </a>
+                  </td>
+                  <td>{{ proxaudi.data | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ proxaudi.hora}}</td>
+                  <td>{{ proxaudi.processo.vara.nome}}</td>
+                  <td>
+                    <span *ngIf="proxaudi.tipo_id == 1">Presencial</span>
+                    <span *ngIf="proxaudi.tipo_id == 2"><a target="_blank" [href]="proxaudi.link">On-Line <i class="fa fa-link" aria-hidden="true"></i></a></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- FIM CARD PROXIMAS AUDIENCIAS-->
+    </div>
+  </section>
+</div>

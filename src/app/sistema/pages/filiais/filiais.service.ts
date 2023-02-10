@@ -13,7 +13,7 @@ const API = environment.url;
 export class FiliaisService{
     constructor(private http: HttpClient){}
 
-    index(): Observable<Filiais> {
+      index(): Observable<Filiais> {
         return this.http.get<Filiais>(`${API}/filiais`);
       }
 

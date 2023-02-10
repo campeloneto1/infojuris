@@ -49,6 +49,18 @@
                 <a
                 *ngIf="perfil.usuarios_edt"
                   class="options"
+                  (click)="resetpass(row)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalresetpass"
+                >
+                  <i
+                    class="fas fa-retweet text-primary point"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+                <a
+                *ngIf="perfil.usuarios_edt"
+                  class="options ml-2"
                   (click)="edit(row)"
                   data-bs-toggle="modal"
                   data-bs-target="#modalcad"
@@ -60,13 +72,13 @@
                 </a>
                 <a
                 *ngIf="perfil.usuarios_del"
-                  class="options"
+                  class="options ml-2"
                   (click)="delete(row)"
                   data-bs-toggle="modal"
                   data-bs-target="#modaldel"
                 >
                   <i
-                    class="fas fa-trash text-danger point ml-2"
+                    class="fas fa-trash text-danger point "
                     aria-hidden="true"
                   ></i
                 ></a>
@@ -148,6 +160,43 @@
               data-bs-dismiss="modal"
               type="button"
               class="btn btn-danger"
+            >
+              Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalresetpass" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" *ngIf="pass">
+          <div class="modal-header">
+            <h4 class="modal-title">Resetar Senha</h4>
+            <button
+              type="button"
+              class="close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Tem certeza que deseja alterar a senha de <b>{{ pass.nome }}</b
+              >?
+            </p>
+          </div>
+          <div class="modal-footer justify-right">
+            <button type="button" class="btn btn-link text-danger" data-bs-dismiss="modal">
+              Fechar
+            </button>
+            <button
+              (click)="confirmPass()"
+              data-bs-dismiss="modal"
+              type="button"
+              class="btn btn-primary"
             >
               Confirmar
             </button>

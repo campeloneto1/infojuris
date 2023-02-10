@@ -74,6 +74,13 @@ const routes: Routes = [
         canActivate: [AlowedGuard]
       },
       {
+        path: 'Lancamento/:id',
+        //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
+        //component: LancamentosComponent,
+        loadComponent: () => import('./pages/lancamentos/lancamento/lancamento.component').then(c => c.LancamentoComponent),
+        canActivate: [AlowedGuard]
+      },
+      {
         path: 'Lancamentos',
         //loadChildren: () => import('./pages/naturezas/naturezas.module').then((m) => m.NaturezasModule),
         //component: LancamentosComponent,

@@ -13,21 +13,26 @@ import { ProcessosService } from "../processos.service";
     templateUrl: './processo.component.html',
     styleUrls: ['./processo.component.css'],
     standalone: true,
-    imports: [CommonModule, SharedModule, TituloModule], 
+    
+    imports: [CommonModule, SharedModule, TituloModule ], 
 })
 
 export class ProcessoComponent implements OnInit{
     id!: number;
+    esaj!: string;
     protected processo$!: Observable<Processo>;
 
     constructor(private activatedRoute: ActivatedRoute,
-        private processosService: ProcessosService){
+        private processosService: ProcessosService
+        ){
 
     }
 
     ngOnInit(): void {
         this.id = this.activatedRoute.snapshot.params['id'];
         this.processo$ = this.processosService.show(this.id);
+        
+        document.cookie.split(";")
     }
 
     filtro(data: Pessoas, tipo: number) {
@@ -41,6 +46,9 @@ export class ProcessoComponent implements OnInit{
         });
       }
 
-    
+      showEsaj(data:string){
+        this.esaj = data
+        //console.log(this.esaj)
+      }
     
 }

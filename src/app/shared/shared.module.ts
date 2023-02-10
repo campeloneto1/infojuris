@@ -9,10 +9,12 @@ import { InputSelectModule } from '../sistema/components/input-select/input-sele
 import { InputTextModule } from '../sistema/components/input-text/input-text.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { SafePipe } from '../pipes/safe.pipe';
 
 
 
 @NgModule({
+  declarations: [SafePipe],
   imports: [
     CommonModule,
     NgxMaskDirective,
@@ -38,6 +40,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     InputSelectModule,
     RouterModule,
     CalendarModule,
+    SafePipe
   ],
 })
 export class SharedModule {}

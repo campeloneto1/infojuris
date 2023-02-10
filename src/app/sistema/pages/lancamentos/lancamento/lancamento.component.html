@@ -1,0 +1,197 @@
+<div class="content-wrapper">
+  <app-titulo title="Lançamento"/>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12" *ngIf="lancamento$ | async as lancamento">
+          <!--<div class="callout callout-info">
+            <h5><i class="fas fa-info"></i> Note:</h5>
+            This page has been enhanced for printing. Click the print button at
+            the bottom of the invoice to test.
+          </div>-->
+
+          <div class="invoice p-3 mb-3">
+            <div class="row">
+              <div class="col-12">
+                <h4>
+                  <i class="fas fa-globe"></i> InfoJuris
+                  <small class="float-right">Data: 03/02/2023</small>
+                </h4>
+              </div>
+            </div>
+
+            <div class="row invoice-info">
+              <div class="col-sm-4 invoice-col">
+                De
+                <address>
+                  <strong>InfoJuris</strong><br />                 
+                  Phone: (88) 9 99492036<br />
+                  Email: financeiro@infojuris.adv.br
+                </address>
+              </div>
+
+              <div class="col-sm-4 invoice-col">
+                Para
+                <address>
+                  <strong>{{lancamento.escritorio.nome}}</strong><br />
+                  CNPJ: <strong> {{lancamento.escritorio.cnpj | mask: '00.000.000/0000-00'}}</strong><br />
+                  <span *ngIf="lancamento.escritorio.rua">
+                    <span *ngIf="lancamento.escritorio.rua">{{lancamento.escritorio.rua}}</span>
+                    <span *ngIf="lancamento.escritorio.numero">, {{lancamento.escritorio.numero}}</span>
+                    <span *ngIf="lancamento.escritorio.bairro">, {{lancamento.escritorio.bairro}}</span><br />
+                    <span *ngIf="lancamento.escritorio.complemento">{{lancamento.escritorio.complemento}}<br /></span>
+                  </span>
+                  <span *ngIf="lancamento.escritorio.cidade">{{lancamento.escritorio.cidade.nome}}</span>
+                  <span *ngIf="lancamento.escritorio.cidade?.estado"> - {{lancamento.escritorio.cidade?.estado?.nome}}</span>
+                  <span *ngIf="lancamento.escritorio.cidade?.estado?.pais"> - {{lancamento.escritorio.cidade?.estado?.pais?.nome}}<br /></span>
+                  <span *ngIf="lancamento.escritorio.telefone1">Telefone: {{lancamento.escritorio.telefone1}}<br /></span>
+                  <span *ngIf="lancamento.escritorio.email">E-mail: {{lancamento.escritorio.email}}<br /></span>
+                </address>
+              </div>
+
+              <div class="col-sm-4 invoice-col">
+                <b>ID #{{lancamento.id}}</b><br />
+                <br />
+                <b>Código Pagamento:</b> {{lancamento.codigo}}
+              </div>
+            </div>
+
+            <!--<div class="row">
+              <div class="col-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Código</th> 
+                      <th>Valor</th>    
+                      <th>Valor Líquido</th>    
+                      <th>Data Vencimento</th>   
+                      <th>Status</th>      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{lancamento.codigo}}</td> 
+                      <td>R$ {{lancamento.valor}}</td> 
+                      <td>R$ {{lancamento.valor_liquido}}</td> 
+                      <td>{{lancamento.data_vencimento | date: 'dd/MM/yyyy'}}</td> 
+                      <td>
+                        <span *ngIf="lancamento.status == 1" class="padd badge text-bg-info">Em aberto</span>
+                        <span *ngIf="lancamento.status == 2" class="padd badge text-bg-primary">Em processamento</span>                  
+                        <span *ngIf="lancamento.status == 5" class="padd badge text-bg-danger">Cancelado</span>
+                        <span *ngIf="lancamento.status == 4" class="padd badge text-bg-success">Pago</span>
+                        <span *ngIf="lancamento.status == 3" class="padd badge text-bg-warning">Em Atraso</span>
+                      </td>   
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>-->
+
+            <div class="row">
+              <div class="col-6">
+                <p class="lead">Forma de Pagamento:</p>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="custom-control custom-radio">
+                      <input class="custom-control-input" type="radio" id="cartao" [value]="1" name="formapag" checked="" [(ngModel)]="formapag">
+                      <label for="cartao" class="custom-control-label">Cartão</label>
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="custom-control custom-radio">
+                      <input class="custom-control-input" type="radio" id="pix" [value]="2" name="formapag" [(ngModel)]="formapag">
+                      <label for="pix" class="custom-control-label">Pix</label>
+                      </div>
+                  </div>
+                </div>
+
+                  <form [formGroup]="form" *ngIf="formapag == 1">
+                    <div class="row">
+                      <app-input-text
+                        class="col-sm-6"
+                        [label]="'Nome conforme o cartão'"
+                        [id]="'nome'"
+                        [tipo]="'text'"
+                        formControlName="nome"
+                      />
+                    </div>
+                    <div class="row">
+                        <app-input-text
+                        class="col-sm-4"
+                        [label]="'Número do Cartão'"
+                        [id]="'cartao'"
+                        [tipo]="'text'"
+                        [mascara]="'0000 0000 0000 0000'"     
+                        formControlName="cartao"
+                      />
+
+                      <app-input-text
+                        class="col-sm-2"
+                        [label]="'Mês Vencimento'"
+                        [id]="'mes'"
+                        [tipo]="'number'"
+                        formControlName="mes"
+                      />
+
+                      <app-input-text
+                        class="col-sm-2"
+                        [label]="'Ano Vencimento'"
+                        [id]="'ano'"
+                        [tipo]="'number'"
+                        formControlName="ano"
+                      />
+
+                      <app-input-text
+                        class="col-sm-2"
+                        [label]="'Cód. Segurança'"
+                        [id]="'codigo'"
+                        [tipo]="'text'"
+                        [mascara]="'000'"     
+                        formControlName="codigo"
+                      />
+                    </div>
+                  </form>
+
+              </div>
+
+              <div class="col-6">
+                <p class="lead">Vencimento {{lancamento.data_vencimento | date: 'dd/MM/yyyy'}}</p>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th style="width: 50%">Valor Original:</th>
+                        <td>R$ {{lancamento.valor}}</td>
+                      </tr>
+                      <tr *ngIf="lancamento.desconto || lancamento.porcentagem"> 
+                        <th>Desconto</th>
+                        <td>
+                          <span *ngIf="lancamento.desconto">- R$ {{lancamento.desconto}}</span>
+                          <span *ngIf="lancamento.porcentagem">- {{lancamento.porcentagem}}%</span>
+                        </td>
+                      </tr>                      
+                      <tr>
+                        <th>Valor Líquido:</th>
+                        <td>R$ {{lancamento.valor_liquido}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="row no-print">
+              <div class="col-12">
+                
+                <button [disabled]="form.invalid" type="button" (click)="pagar(lancamento)" class="btn btn-block btn-success float-right">
+                  <i class="far fa-credit-card"></i> Pagar
+                </button>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

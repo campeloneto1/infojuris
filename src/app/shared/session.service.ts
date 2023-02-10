@@ -10,6 +10,7 @@ import { Session } from './session';
 export class SessionService {
     private token!: string;
     private user!: Usuario;
+    private pagseguro: boolean = false;
 
     pathadministrador = [
       'Cidades',
@@ -30,6 +31,7 @@ export class SessionService {
     pathgestor = [
       'Filiais',
       'Lancamentos',
+      'Lancamento',
       'Usuarios',
     ]   
 
@@ -100,6 +102,14 @@ export class SessionService {
 
     retornaPerfil():Perfil{
       return this.user.perfil;
+    }
+
+    retornaPagseguro(){
+      return this.pagseguro;
+    }
+
+    setPagseguro(data: boolean){
+       this.pagseguro = data;
     }
 
     hasPermission(data: any):boolean{

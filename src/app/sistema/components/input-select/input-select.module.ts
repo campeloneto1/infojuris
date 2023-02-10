@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SelectDropDownModule } from "ngx-select-dropdown";
 import { InputSelectComponent } from "./input-select.component";
-import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
     declarations: [InputSelectComponent],
@@ -11,7 +10,6 @@ import { NgxSelectModule } from 'ngx-select-ex';
         FormsModule,
         ReactiveFormsModule,
         SelectDropDownModule,
-        NgxSelectModule
     ],
     exports: [InputSelectComponent]
 })

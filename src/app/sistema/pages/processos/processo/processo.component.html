@@ -39,15 +39,57 @@
                   }}</a>
                 </li>
                 <li class="list-group-item">
+                  <b>Data</b>
+                  <a class="float-right"
+                    >{{ processo.data | date : "dd/MM/yyyy" }}</a
+                  >
+                </li>
+                <li class="list-group-item">
                   <b>Valor</b>
                   <a class="float-right"
                     >R$ {{ processo.valor | mask : "separator.2" }}</a
                   >
                 </li>
+                <li class="list-group-item">
+                  <a class="btn btn-primary btn-block" 
+                   data-bs-toggle="modal"
+                    data-bs-target="#modalesaj"
+                    (click)="showEsaj('https://esaj.tjce.jus.br/cpopg/show.do?processo.numero='+processo.codigo)"
+                  >
+                    Visualizar processo
+                </a>
+                </li>
               </ul>
             </div>
           </div>
           <!--FIM CARD INFORMACOES-->
+
+          <!-- MODAL CONSULTA ESAJ-->
+
+          <div class="modal fade" id="modalesaj"  aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content" style="height: 900px;">
+                <div class="modal-header">
+                  <h4 class="modal-title">Consulta Esaj</h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body" *ngIf="esaj">
+                    <iframe width="100%" height="100%" [src]="esaj|safe"></iframe>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <!--FIM MODAL OCNSULTA ESAJ-->
+
         </div>
 
         <div class="col-md-9">

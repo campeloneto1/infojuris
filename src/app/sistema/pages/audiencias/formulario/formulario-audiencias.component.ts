@@ -22,10 +22,11 @@ export class FormularioAudienciasComponent implements OnInit{
 
   protected processos$!: Observable<Processos>;
 
-  protected tipos$ = of([
+  protected tipos2 = [
     { id: 1, nome: 'Presencial' },
     { id: 2, nome: 'On-Line' },
-  ]);
+  ];
+  protected tipos$ = of(this.tipos2);
 
   protected config!: any
   protected config2!: any
@@ -67,6 +68,13 @@ export class FormularioAudienciasComponent implements OnInit{
 
   setForm(data: Audiencia) {
     this.form.patchValue(data);
+    if (data.tipo_id) {
+      this.tipos2.map((tipo) => {
+        if(tipo.id == data.tipo_id){
+          this.form.get('tipo')?.patchValue(tipo);
+        }
+      });
+    }
     
   }
 
@@ -79,7 +87,7 @@ export class FormularioAudienciasComponent implements OnInit{
 
     if(this.form.value.processo.id){
       this.form.get('processo_id')?.patchValue(this.form.value.processo.id);
-    this.form.get('processo')?.patchValue('');
+      this.form.get('processo')?.patchValue('');
     }
     if(this.form.value.tipo.id){
       this.form.get('tipo_id')?.patchValue(this.form.value.tipo.id);

@@ -8,6 +8,7 @@ import { SharedService } from "src/app/shared/shared.service";
 import { TituloModule } from "../../components/titulo/titulo.module";
 import { Perfil } from "../perfis/perfis";
 import { FormularioLancamentosComponent } from "./formulario/formulario-lancamentos.component";
+import { LancamentoComponent } from "./lancamento/lancamento.component";
 import { Lancamento, Lancamentos } from "./lancamentos";
 import { LancamentosService } from "./lancamentos.service";
 
@@ -16,7 +17,7 @@ import { LancamentosService } from "./lancamentos.service";
     templateUrl: './lancamentos.component.html',
     styleUrls: ['./lancamentos.component.css'],
     standalone: true,
-    imports: [CommonModule, SharedModule, TituloModule, FormularioLancamentosComponent], 
+    imports: [CommonModule, SharedModule, TituloModule, FormularioLancamentosComponent, LancamentoComponent], 
 })
 
 export class LancamentosComponent{

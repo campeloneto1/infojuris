@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Login } from "./login/login";
 import { Observable } from "rxjs";
 import { Session } from "../shared/session";
+import { environment } from "src/environments/environments";
 
-const API = 'http://localhost/apiinfojuris/public/api';
+const API = environment.url;
 
 @Injectable({
     providedIn: 'root',

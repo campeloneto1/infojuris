@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
-    url: 'http://localhost/apiinfojuris/public/api',
+    production: true,
+    url: 'https://api.infojuris.adv.br/api',
 };
   
